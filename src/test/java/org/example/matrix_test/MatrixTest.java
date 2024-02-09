@@ -1,6 +1,9 @@
-package org.example.matrixTest;
+package org.example.matrix_test;
 
 import junit.framework.TestCase;
+import org.example.matrix.DiagMatrix;
+import org.example.matrix.Matrix;
+import org.example.matrix.UpTriangleMatrix;
 import org.junit.jupiter.api.Assertions;
 
 public class MatrixTest extends TestCase {
@@ -81,31 +84,32 @@ public class MatrixTest extends TestCase {
         });
     }
 
-public void testUpTriangleMatrix(){
+    public void testUpTriangleMatrix() {
         System.out.println("===TEST FOR UP TRIANGLE EXECUTED===");
-        UpTriangleMatrix up=new UpTriangleMatrix(3);
-        up.setElem(0,0,1);
-        up.setElem(0,1,2);
-        up.setElem(0,2,3);
-        up.setElem(1,1,5);
-        up.setElem(1,2,6);
-        up.setElem(2,2,9);
+        UpTriangleMatrix up = new UpTriangleMatrix(3);
+        up.setElem(0, 0, 1);
+        up.setElem(0, 1, 2);
+        up.setElem(0, 2, 3);
+        up.setElem(1, 1, 5);
+        up.setElem(1, 2, 6);
+        up.setElem(2, 2, 9);
         up.toString();
-        }
-public void testUpTriangleMatrixException(){
-    UpTriangleMatrix up1=new UpTriangleMatrix(3);
-    up1.setElem(0,0,1);
-    up1.setElem(0,1,2);
-    up1.setElem(0,2,3);
-    up1.setElem(1,1,5);
-    up1.setElem(1,2,6);
-    up1.setElem(2,2,9);
-    up1.toString();
-        System.out.println("===TEST FOR TRIANGLE EXCEPTION EXECUTED===");
-        Assertions.assertThrows(IllegalArgumentException.class,()->{
-        DiagMatrix diagMatrix1=new DiagMatrix(2,new double[]{3,4});
-        up1.setElem(2,1,-4);
-        });
-        }
+    }
 
-        }
+    public void testUpTriangleMatrixException() {
+        UpTriangleMatrix up1 = new UpTriangleMatrix(3);
+        up1.setElem(0, 0, 1);
+        up1.setElem(0, 1, 2);
+        up1.setElem(0, 2, 3);
+        up1.setElem(1, 1, 5);
+        up1.setElem(1, 2, 6);
+        up1.setElem(2, 2, 9);
+        up1.toString();
+        System.out.println("===TEST FOR TRIANGLE EXCEPTION EXECUTED===");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            DiagMatrix diagMatrix1 = new DiagMatrix(2, new double[]{3, 4});
+            up1.setElem(2, 1, -4);
+        });
+    }
+
+}

@@ -1,8 +1,9 @@
-package org.example.matrixService;
+package org.example.matrix_service_test;
 
 import junit.framework.TestCase;
-import org.example.matrixTest.DiagMatrix;
-import org.example.matrixTest.Matrix;
+import org.example.matrix.DiagMatrix;
+import org.example.matrix.Matrix;
+import org.example.matrix_service.MatrixService;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
@@ -15,6 +16,6 @@ public class MatrixServiceTest extends TestCase {
         Matrix[] sortedArr = {diag2,diag1,diag3};
 //        System.out.println(Arrays.toString(MatrixService.SortArrMatrices(mArr)));
         System.out.println("===TEST ONE EXECUTED===");
-        assertArrayEquals(sortedArr,MatrixService.sortArrMatrices(mArr));
+        assertArrayEquals(sortedArr, MatrixService.sortArrMatrices(mArr));
     }
 }

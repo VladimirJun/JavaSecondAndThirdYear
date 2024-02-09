@@ -1,7 +1,8 @@
-package org.example.matrixDeterminantComparator;
+package org.example.matrix_determinant_comparator_test;
 
 import junit.framework.TestCase;
-import org.example.matrixTest.DiagMatrix;
+import org.example.matrix.DiagMatrix;
+import org.example.matrix_determinant_comparator.MatrixDeterminantComparator;
 
 public class MatrixDeterminantComparatorTest extends TestCase {
     public void testComparatorFirst() {

@@ -1,4 +1,4 @@
-package org.example.matrixTest;
+package org.example.matrix;
 
 public class DiagMatrix extends Matrix{
 

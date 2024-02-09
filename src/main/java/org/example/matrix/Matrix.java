@@ -1,6 +1,6 @@
-package org.example.matrixTest;
+package org.example.matrix;
 
-import org.example.matrixInterface.IMatrix;
+import org.example.matrix_interface.IMatrix;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -30,6 +30,7 @@ public class Matrix implements IMatrix {
         matrix[i * size + j] = elem;
         determinantValueCache = false;
     }
+
     private static int calculateDeterminantGauss(double[][] matrix) {
         int size = matrix.length;
         int determinant = 1;
@@ -90,7 +91,6 @@ public class Matrix implements IMatrix {
         }
         return det;
     }
-
 
 
     @Override

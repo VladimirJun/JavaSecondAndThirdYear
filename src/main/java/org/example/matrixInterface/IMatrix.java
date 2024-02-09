@@ -1,4 +1,4 @@
-package org.example.MatrixInterface;
+package org.example.matrixInterface;
 
 public interface IMatrix {
     double getElem(int i,int j);

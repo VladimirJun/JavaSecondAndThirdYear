@@ -1,7 +1,7 @@
-package org.example.MatrixService;
+package org.example.matrixService;
 
-import org.example.Matrix.Matrix;
-import org.example.MatrixDeterminantComparator.MatrixDeterminantComparator;
+import org.example.matrixTest.Matrix;
+import org.example.matrixDeterminantComparator.MatrixDeterminantComparator;
 
 import java.util.Arrays;
 

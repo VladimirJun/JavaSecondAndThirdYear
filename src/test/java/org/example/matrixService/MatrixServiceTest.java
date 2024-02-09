@@ -1,8 +1,8 @@
-package org.example.MatrixService;
+package org.example.matrixService;
 
 import junit.framework.TestCase;
-import org.example.Matrix.DiagMatrix;
-import org.example.Matrix.Matrix;
+import org.example.matrixTest.DiagMatrix;
+import org.example.matrixTest.Matrix;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 

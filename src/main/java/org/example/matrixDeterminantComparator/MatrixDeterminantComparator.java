@@ -1,6 +1,6 @@
-package org.example.MatrixDeterminantComparator;
+package org.example.matrixDeterminantComparator;
 
-import org.example.Matrix.Matrix;
+import org.example.matrixTest.Matrix;
 
 import java.util.Comparator;
 

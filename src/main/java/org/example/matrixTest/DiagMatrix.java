@@ -1,6 +1,4 @@
-package org.example.Matrix;
-
-import java.util.Arrays;
+package org.example.matrixTest;
 
 public class DiagMatrix extends Matrix{
 

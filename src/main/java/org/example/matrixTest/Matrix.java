@@ -1,6 +1,6 @@
-package org.example.Matrix;
+package org.example.matrixTest;
 
-import org.example.MatrixInterface.IMatrix;
+import org.example.matrixInterface.IMatrix;
 
 import java.util.Arrays;
 import java.util.Objects;

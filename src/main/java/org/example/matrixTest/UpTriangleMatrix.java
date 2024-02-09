@@ -1,4 +1,4 @@
-package org.example.Matrix;
+package org.example.matrixTest;
 
 public class UpTriangleMatrix extends Matrix {
     public UpTriangleMatrix(int size) {

@@ -5,10 +5,7 @@ import org.example.task_13.Data;
 import org.example.task_13.DataIterator;
 import org.example.task_13.Group;
 //
-/**
- * Hello world!
- *
- */
+
 public class App 
 {
     public static void main( String[] args )

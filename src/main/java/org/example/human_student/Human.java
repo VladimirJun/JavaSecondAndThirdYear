@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Objects;
 
 public class Human{
-//
+
 
     private String name;
     private String surname;

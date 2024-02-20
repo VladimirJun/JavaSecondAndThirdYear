@@ -25,7 +25,7 @@ public class Student extends  Human{
         Student student = (Student) o;
         return Objects.equals(faculty, student.faculty);
     }
-//
+
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), faculty);

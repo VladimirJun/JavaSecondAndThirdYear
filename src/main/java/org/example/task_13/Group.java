@@ -12,7 +12,7 @@ public class Group {
     public int getId() {
         return id;
     }
-//
+
     public int[] getData() {
         return data;
     }

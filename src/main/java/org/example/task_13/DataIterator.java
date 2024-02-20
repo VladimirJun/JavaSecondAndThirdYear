@@ -16,7 +16,6 @@ public class DataIterator implements Iterator<Integer> {
     public boolean hasNext() {
         return index < data.length();
     }
-//
     @Override
     public Integer next() {
         if (!hasNext()) {

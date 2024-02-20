@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 public class CollectionsDemo {
 
     Logger logger = Logger.getLogger(CollectionsDemo.class.getName());
-//
+
     public static int countMatchingFirstChar(List<String> list, char c) {
         int count = 0;
         for (String str : list) {

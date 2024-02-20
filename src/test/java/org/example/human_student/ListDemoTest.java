@@ -204,7 +204,7 @@ public class ListDemoTest extends TestCase {
         assertTrue(ListDemo.findMaxAge(humans).contains(h2));
         assertTrue(ListDemo.findMaxAge(humans).contains(h3));
     }
-
+//
     public void testFindMaxAge3() {
         Human h1 = new Human("Петров", "Владимир", "Юрьевич", 19);
         Human h2 = new Human("Иванов", "Иван", "Иванович", 30);

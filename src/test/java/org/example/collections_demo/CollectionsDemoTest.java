@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 public class CollectionsDemoTest extends TestCase {
 
     Logger logger = Logger.getLogger(CollectionsDemoTest.class.getName());
-
+//
     public void testCountMatchingFirstChar() {
         List<String> list = new ArrayList<>();
         List<String> listEmpty = new ArrayList<>();

@@ -30,4 +30,11 @@ public class Student extends  Human{
     public int hashCode() {
         return Objects.hash(super.hashCode(), faculty);
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "faculty='" + faculty + '\'' +
+                '}';
+    }
 }

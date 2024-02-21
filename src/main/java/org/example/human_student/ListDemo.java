@@ -48,18 +48,27 @@ public class ListDemo{
         }
         return humanSet;
     }
-
+    //и коллекцию и копарабл нужно типизировать именно Human. И в comareTo() сравнивать какое-то общее поле из People
+    //treeset - отсортированная коллекция, но по какому признаку - неизвестно. для этого переопределяем метод compare
     //task6
-    public static List<Human> buildSortedlist(List<? extends Human> humans) {
-        List<Human> copy = new ArrayList<>(humans);
-        copy.sort(new Comparator<Human>() {
-            @Override
-            public int compare(Human o1, Human o2) {
-                return o1.toString().compareTo(o2.toString());
+    public static List<Human> buildSortedlist(Set<? extends Human> humans) {
+        Map<String, List<Human>> humanMap = new HashMap<>();
+
+        for (Human human : humans) {
+            String name = human.getFullName();
+            if (!humanMap.containsKey(name)) {
+                humanMap.put(name, new ArrayList<>());
             }
-        });
-        return copy;
+            humanMap.get(name).add(human);
+        }
+
+        List<Human> result = new ArrayList<>();
+        for (List<Human> humansList : humanMap.values()) {
+            result.addAll(humansList);
+        }
+        return result;
     }
+
 
 
     //task7
@@ -90,11 +99,22 @@ public class ListDemo{
     }
 
     //task9
-    public static Map<Integer, List<Human>> getAgeToHumansMap(Set<Human> humanSet) {
+    public static Map<Integer, Integer> getAgeToHumansMap(Map<Integer, Human> humanSet) {
+        Map<Integer, Integer> result = new HashMap<>();
+
+        for (Map.Entry<Integer, Human> entry : humanSet.entrySet()) {
+            Integer id = entry.getKey();
+            Human human = entry.getValue();
+
+            result.put(id, human.getAge());
+        }
+        return result;
+    }
+    //task 10
+    public static Map<Integer, List<Human>> buildAgeMap(Set<Human> humans) {
         Map<Integer, List<Human>> result = new HashMap<>();
 
-        for (Human human : humanSet) {
-
+        for (Human human : humans) {
             if (!result.containsKey(human.getAge())) {
                 result.put(human.getAge(), new ArrayList<>());
             }
@@ -103,23 +123,6 @@ public class ListDemo{
         return result;
     }
 
-    //task 10
-    public static Map<Integer, List<Human>> buildAgeMap(List<Human> humans) {
-        Map<Integer, List<Human>> ageMap = new HashMap<>();
-
-        for (Human human : humans) {
-            int age = human.getAge();
-            List<Human> ageList = ageMap.get(age);
-
-            if (ageList == null) {
-                ageList = new ArrayList<>();
-                ageMap.put(age, ageList);
-            }
-
-            ageList.add(human);
-        }
-        return ageMap;
-    }
 
     //task11
     public static Map<Integer, Map<Character, List<Human>>> buildAgeLetterMap(List<Human> humans) {

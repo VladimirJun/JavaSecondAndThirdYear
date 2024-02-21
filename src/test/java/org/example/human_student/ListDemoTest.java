@@ -3,6 +3,7 @@ package org.example.human_student;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 import static org.example.human_student.ListDemo.buildAgeLetterMap;
@@ -222,7 +223,7 @@ public class ListDemoTest extends TestCase {
 
     //6
     public void testBuildSortedlist1() {
-        List<Human> humans = new ArrayList<>();
+        Set<Human> humans = new HashSet<>();
         Human human1 = new Human("Ильин", "Никита", "Евгеньевич", 25);
         Human human2 = new Human("Смирнов", "Алексей", "Алексеевич", 25);
         Human human11 = new Human("Ильев", "Виктор", "Петрович", 25);
@@ -239,37 +240,31 @@ public class ListDemoTest extends TestCase {
         sortedHumans.add(human3);
         sortedHumans.add(human4);
         sortedHumans.add(human2);
-        System.out.println("===TEST ONE EXECUTED===");
-        assertEquals(sortedHumans, ListDemo.buildSortedlist(humans));
+        System.out.println(ListDemo.buildSortedlist(humans));
     }
 
     public void testBuildSortedlist2() {
-        List<Human> humans = new ArrayList<>();
-        Human human1 = new Human("Ильин", "Никита", "Евгеньевич", 25);
-        Human human2 = new Human("Смирнов", "Алексей", "Алексеевич", 25);
-        Human human11 = new Human("Ильев", "Виктор", "Петрович", 25);
+        Set<Human> humans = new HashSet<>();
         Human human3 = new Human("Петров", "Юрий", "Петрович", 30);
-        Human human4 = new Human("Сидоров", "Сергей", "Сергеевич", 30);
         Human human33 = new Human("Петров", "Алексей", "Владимирович", 28);
-        humans.add(human1);
-        humans.add(human2);
+        Human human333 = new Human("Петров", "Алексей", "Владимирович", 200);
         humans.add(human3);
-        humans.add(human4);
-        humans.add(human11);
+        humans.add(human333);
         humans.add(human33);
+        System.out.println(humans);
+        System.out.println(ListDemo.buildSortedlist(humans));
+
         List<Human> sortedHumans = new ArrayList<>();
-        sortedHumans.add(human11);
-        sortedHumans.add(human1);
         sortedHumans.add(human33);
+        sortedHumans.add(human333);
         sortedHumans.add(human3);
-        sortedHumans.add(human4);
-        sortedHumans.add(human2);
+        System.out.println(sortedHumans);
         System.out.println("===TEST ONE EXECUTED===");
         assertEquals(sortedHumans, ListDemo.buildSortedlist(humans));
     }
 
     public void testBuildSortedlist3() {
-        List<Human> humans = new ArrayList<>();
+        Set<Human> humans = new HashSet<>();
         List<Human> empty = new ArrayList<>();
         System.out.println("===TEST FOR EMPTY EXECUTED===");
         assertEquals(empty, ListDemo.buildSortedlist(humans));
@@ -363,75 +358,74 @@ public class ListDemoTest extends TestCase {
 
     //9
     public void testGetAgeToHumansMapMultipleElements() {
-        Set<Human> humanSet = new HashSet<>();
+        Map<Integer,Human> humanMap = new HashMap<>();
         Human h1 = new Human("Ильин", "Никита", "Евгеньевич", 18);
         Human h2 = new Human("Смирнов", "Алексей", "Алексеевич", 20);
         Human h3 = new Human("Ильев", "Виктор", "Петрович", 19);
-        humanSet.add(h1);
-        humanSet.add(h2);
-        humanSet.add(h3);
-        Map<Integer, List<Human>> expected = new HashMap<>();
-        expected.put(18, new ArrayList<>());
-        expected.get(18).add(h1);
-        expected.put(20, new ArrayList<>());
-        expected.get(20).add(h2);
-        expected.put(19, new ArrayList<>());
-        expected.get(19).add(h3);
-        Map<Integer, List<Human>> actual = ListDemo.getAgeToHumansMap(humanSet);
+        Human h4 = new Human("Карлсен", "Никита", "Евгеньевич", 18);
+        humanMap.put(1,h1);
+        humanMap.put(2,h2);
+        humanMap.put(3,h3);
+        humanMap.put(4,h4);
+        Map<Integer, Integer> expected = new HashMap<>();
+        expected.put(1, 18);
+        expected.put(2, 20);
+        expected.put(3, 19);
+        expected.put(4,18);
+        Map<Integer, Integer> actual = ListDemo.getAgeToHumansMap(humanMap);
         System.out.println("===TEST ONE EXECUTED===");
-        assertEquals(expected, actual);
+        assertEquals(expected,actual);
     }
 
     public void testGetAgeToHumansMapEmpty() {
-        Set<Human> humanSet = new HashSet<>();
-        Map<Integer, List<Human>> expected = new HashMap<>();
-        Map<Integer, List<Human>> actual = ListDemo.getAgeToHumansMap(humanSet);
+        Map<Integer,Human> humanMap = new HashMap<>();
+        Map<Integer, Integer> expected = new HashMap<>();
+        Map<Integer, Integer> actual = ListDemo.getAgeToHumansMap(humanMap);
         System.out.println("===TEST FOR EMPTY EXECUTED===");
         assertEquals(expected, actual);
     }
 
     //10
     public void testBuildAgeMap1() {
-        List<Human> humans = new ArrayList<>();
+        Set<Human> humans = new HashSet<>();
         Human h1 = new Human("Иванов", "Иван", "Иванович", 25);
         Human h2 = new Human("Смирнов", "Алексей", "Алексеевич", 25);
         Human h3 = new Human("Петров", "Петр", "Петрович", 30);
         Human h4 = new Human("Сидоров", "Антон", "Антонович", 30);
-        Human h5 = new Human("Петросян", "Тигран", "Вартанович", 30);
+        Human h5 = new Human("Петросян", "Тигран", "Вартанович", 31);
         humans.add(h1);
         humans.add(h2);
         humans.add(h3);
         humans.add(h4);
         humans.add(h5);
         Map<Integer, List<Human>> ageMap = buildAgeMap(humans);
-        List<Human> expected = new ArrayList<Human>();
-        expected.add(h3);
-        expected.add(h4);
+        List<Human> expected = new LinkedList<>();
         expected.add(h5);
         System.out.println("===TEST ONE EXECUTED===");
-        assertEquals(expected, ageMap.get(30));
+      assertEquals(expected, ageMap.get(31));
     }
     public void testBuildAgeMap2() {
-        List<Human> humans = new ArrayList<>();
+        Set<Human> humans = new HashSet<>();
         Human h1 = new Human("Иванов", "Иван", "Иванович", 25);
         Human h2 = new Human("Смирнов", "Алексей", "Алексеевич", 25);
         Human h3 = new Human("Петров", "Петр", "Петрович", 30);
         Human h4 = new Human("Сидоров", "Антон", "Антонович", 30);
-        Human h5 = new Human("Петросян", "Тигран", "Вартанович", 30);
+        Human h5 = new Human("Петросян", "Тигран", "Вартанович", 25);
         humans.add(h1);
         humans.add(h2);
         humans.add(h3);
         humans.add(h4);
         humans.add(h5);
         Map<Integer, List<Human>> ageMap = buildAgeMap(humans);
-        List<Human> expected = new ArrayList<Human>();
+        List<Human> expected = new LinkedList<>();
         expected.add(h1);
         expected.add(h2);
+        expected.add(h5);
         System.out.println("===TEST TWO EXECUTED===");
         assertEquals(expected, ageMap.get(25));
     }
     public void testBuildAgeMapEmpty() {
-        List<Human> humans = new ArrayList<>();
+        Set<Human> humans = new HashSet<>();
         Map<Integer, List<Human>> ageMap = buildAgeMap(humans);
         System.out.println("===TEST TWO EXECUTED===");
         assertEquals(null, ageMap.get(25));

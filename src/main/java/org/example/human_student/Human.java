@@ -1,9 +1,8 @@
 package org.example.human_student;
 
-import java.util.Comparator;
 import java.util.Objects;
 
-public class Human{
+public class Human {
 
 
     private String name;
@@ -74,5 +73,8 @@ public class Human{
                 '}';
     }
 
+    public String getFullName() {
+        return surname + " " + name + " " + patronymic;
+    }
 
 }

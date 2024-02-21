@@ -48,27 +48,22 @@ public class ListDemo{
         }
         return humanSet;
     }
-    //и коллекцию и копарабл нужно типизировать именно Human. И в comareTo() сравнивать какое-то общее поле из People
-    //treeset - отсортированная коллекция, но по какому признаку - неизвестно. для этого переопределяем метод compare
     //task6
     public static List<Human> buildSortedlist(Set<? extends Human> humans) {
-        Map<String, List<Human>> humanMap = new HashMap<>();
-
-        for (Human human : humans) {
-            String name = human.getFullName();
-            if (!humanMap.containsKey(name)) {
-                humanMap.put(name, new ArrayList<>());
+        Set<Human> sortedSet = new TreeSet<>(new Comparator<Human>() {
+            @Override
+            public int compare(Human o1, Human o2) {
+                int compareNames = o1.getFullName().compareTo(o2.getFullName());
+                if (compareNames != 0) {
+                    return compareNames;
+                } else {
+                    return o1.compareTo(o2);
+                }
             }
-            humanMap.get(name).add(human);
-        }
-
-        List<Human> result = new ArrayList<>();
-        for (List<Human> humansList : humanMap.values()) {
-            result.addAll(humansList);
-        }
-        return result;
+        });
+        sortedSet.addAll(humans);
+        return new ArrayList<>(sortedSet);
     }
-
 
 
     //task7

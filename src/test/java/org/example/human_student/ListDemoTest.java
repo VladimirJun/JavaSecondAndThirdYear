@@ -2,6 +2,7 @@ package org.example.human_student;
 
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
+import org.w3c.dom.ls.LSOutput;
 
 import java.sql.SQLOutput;
 import java.util.*;
@@ -239,14 +240,10 @@ public class ListDemoTest extends TestCase {
         humans.add(human3);
         humans.add(human333);
         humans.add(human33);
-        System.out.println(humans);
-        System.out.println(ListDemo.buildSortedlist(humans));
-
         List<Human> sortedHumans = new ArrayList<>();
         sortedHumans.add(human33);
         sortedHumans.add(human333);
         sortedHumans.add(human3);
-        System.out.println(sortedHumans);
         assertEquals(sortedHumans, ListDemo.buildSortedlist(humans));
     }
 

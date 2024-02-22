@@ -3,7 +3,7 @@ package org.example.human_student;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class Human{
+public class Human implements Comparable<Human> {
 
 
     private String name;
@@ -74,5 +74,11 @@ public class Human{
                 '}';
     }
 
-
+    public String getFullName() {
+        return surname + " " + name + " " + patronymic;
+    }
+@Override
+    public int compareTo(Human o2) {
+    return this.getFullName().compareTo(o2.getFullName());
+    }
 }

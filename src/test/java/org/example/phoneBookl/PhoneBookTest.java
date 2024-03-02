@@ -182,7 +182,7 @@ public class PhoneBookTest extends TestCase {
         List<String> phones1 = new ArrayList<String>();
         phones1.add(ph1);
         phones1.add(ph11);
-        Map<Human, List<String>> result = book.findPeopleByName(h1.getName());
+        Map<Human, List<String>> result = book.findPeopleByName(h1.getSurname());
         assertEquals(phones1,result.get(h1));
     }
     public void testFindPeopleByNameEmpty() {

@@ -256,6 +256,7 @@ public class ListDemoTest extends TestCase {
         Map<Integer, Human> idHuman = new HashMap<>();
         Human h1 = new Human("Иванов", "Иван", "Иванович", 25);
         Set<Integer> ids = new HashSet<>();
+
         Set<Human> expected = new HashSet<>();
         Set<Human> actual = ListDemo.getHumansByIds(idHuman, ids);
         assertEquals(expected, actual);

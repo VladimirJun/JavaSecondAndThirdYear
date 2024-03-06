@@ -56,7 +56,7 @@ public class ListDemo {
                 int compareNames = o1.getFullName().compareTo(o2.getFullName());
                 if (compareNames != 0) {
                     return compareNames;
-                } else {
+                } else  {
                     return o1.getAge() - (o2.getAge());
                 }
             }

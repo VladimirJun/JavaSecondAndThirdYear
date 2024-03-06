@@ -3,7 +3,7 @@ package org.example.human_student;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ListDemo{
+public class ListDemo {
     public static List<Human> findSameSurname(List<Human> humans, Human person) {
         List<Human> sameSurnameArr = new ArrayList<>();
         for (Human human : humans) {
@@ -48,6 +48,7 @@ public class ListDemo{
         }
         return humanSet;
     }
+
     //task6
     public static List<Human> buildSortedlist(Set<? extends Human> humans) {
         Set<Human> sortedSet = new TreeSet<>(new Comparator<Human>() {
@@ -57,7 +58,7 @@ public class ListDemo{
                 if (compareNames != 0) {
                     return compareNames;
                 } else {
-                    return o1.getAge()-(o2.getAge());
+                    return o1.getAge() - (o2.getAge());
                 }
             }
         });
@@ -105,6 +106,7 @@ public class ListDemo{
         }
         return result;
     }
+
     //task 10
     public static Map<Integer, List<Human>> buildAgeMap(Set<Human> humans) {
         Map<Integer, List<Human>> result = new HashMap<>();
@@ -120,7 +122,7 @@ public class ListDemo{
 
 
     //task11
-    public static Map<Integer, Map<Character, List<Human>>> buildAgeLetterMap(List<Human> humans) {
+    public static Map<Integer, Map<Character, List<Human>>> buildAgeLetterMap(Set<Human> humans) {
         Map<Integer, Map<Character, List<Human>>> ageLetterMap = new HashMap<>();
 
         for (Human human : humans) {
@@ -147,24 +149,9 @@ public class ListDemo{
             Map<Character, List<Human>> letterMap = ageEntry.getValue();
             for (Map.Entry<Character, List<Human>> letterEntry : letterMap.entrySet()) {
                 List<Human> letterList = letterEntry.getValue();
-                letterList.sort(new Comparator<Human>() {
-                    @Override
-                    public int compare(Human h1, Human h2) {
-                        int result = h1.getSurname().compareTo(h2.getSurname());
-                        if (result == 0) {
-                            result = h1.getName().compareTo(h2.getName());
-                            if (result == 0) {
-                                result = h1.getPatronymic().compareTo(h2.getPatronymic());
-                            }
-                        }
-                        return result;
-                    }
-                });
+                letterList.sort(Comparator.comparing(Human::getFullName, Comparator.reverseOrder()));
             }
         }
         return ageLetterMap;
     }
-
-
-
 }

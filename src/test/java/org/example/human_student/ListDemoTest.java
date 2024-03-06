@@ -423,30 +423,37 @@ public class ListDemoTest extends TestCase {
     }
     //11
     public void testAgeToLetterMap() {
-        List<Human> humans = new ArrayList<>();
+        Set<Human> humans = new HashSet<>();
         Human human1 = new Human("Ильин", "Никита", "Евгеньевич", 25);
         Human human2 = new Human("Смирнов", "Алексей", "Алексеевич", 25);
         Human human11 = new Human("Ильев", "Виктор", "Петрович", 25);
+        Human human111 = new Human("Ильев", "Артем", "Викторович", 30);
         Human human3 = new Human("Петров", "Юрий", "Петрович", 30);
-        Human human4 = new Human("Сидоров", "Сергей", "Сергеевич", 30);
+        Human human4 = new Human("Петров", "Сергей", "Сергеевич", 30);
         humans.add(human1);
         humans.add(human2);
         humans.add(human3);
         humans.add(human4);
         humans.add(human11);
+        humans.add(human111);
+
+
+        List<Human> sList = new ArrayList<>();
+        sList.add(human2);
         Map<Integer, Map<Character, List<Human>>> ageLetterMap = buildAgeLetterMap(humans);
         List<Human> expected = new LinkedList<Human>();
-        expected.add(human11);
         expected.add(human1);
+        expected.add(human11);
         assertEquals(expected,ageLetterMap.get(25).get('И'));
+        System.out.println(ageLetterMap);
     }
     public void testAgetoLetterMap2(){
-        List<Human> humans = new ArrayList<>();
+        Set<Human> humans = new HashSet<>();
         Human human1 = new Human("Ильин", "Никита", "Евгеньевич", 25);
         Human human2 = new Human("Смирнов", "Алексей", "Алексеевич", 25);
         Human human11 = new Human("Ильев", "Виктор", "Петрович", 25);
         Human human3 = new Human("Петров", "Юрий", "Петрович", 30);
-        Human human4 = new Human("Сидоров", "Сергей", "Сергеевич", 30);
+        Human human4 = new Human("Петров", "Сергей", "Сергеевич", 30);
         humans.add(human1);
         humans.add(human2);
         humans.add(human3);
@@ -455,6 +462,7 @@ public class ListDemoTest extends TestCase {
         Map<Integer, Map<Character, List<Human>>> ageLetterMap = buildAgeLetterMap(humans);
         List<Human> expected = new LinkedList<Human>();
         expected.add(human3);
+        expected.add(human4);
         assertEquals(expected,ageLetterMap.get(30).get('П'));
     }
 

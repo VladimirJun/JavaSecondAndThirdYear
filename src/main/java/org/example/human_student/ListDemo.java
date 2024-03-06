@@ -1,7 +1,6 @@
 package org.example.human_student;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ListDemo {
     public static List<Human> findSameSurname(List<Human> humans, Human person) {
@@ -57,7 +56,7 @@ public class ListDemo {
                 int compareNames = o1.getFullName().compareTo(o2.getFullName());
                 if (compareNames != 0) {
                     return compareNames;
-                } else {
+                } else  {
                     return o1.getAge() - (o2.getAge());
                 }
             }

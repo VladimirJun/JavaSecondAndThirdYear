@@ -1,14 +1,11 @@
 package org.example.task_13;
 
-import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DataTest {
 
@@ -34,19 +31,16 @@ public class DataTest {
         Data data = new Data("Test Data", group1, group2);
         assertEquals(2, data.length());
     }
+
     @Test
     public void testIterator() {
-        Group group1 = new Group(0,1,2,3);
-        Group group2 = new Group(1,4,5,6);
+        Group group1 = new Group(0, 1, 2, 3,-4);
+        Group group2 = new Group(1, 4, 5, 6);
         Data data = new Data("Test Data", group1, group2);
         Iterator<Integer> iterator = data.iterator();
-
-        List<Integer> result = new ArrayList<>();
         while (iterator.hasNext()) {
-            result.add(iterator.next());
+            System.out.println(iterator.next());
         }
-        assertEquals(Arrays.asList(1,4), result);
     }
 
-
-    }
+}

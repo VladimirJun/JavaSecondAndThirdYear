@@ -39,14 +39,15 @@ public class PhoneBook {
         return null;
     }
 
-    public Map<Human, List<String>> findPeopleByName(String name) {
-        Map<Human, List<String>> filteredPhoneBook = new HashMap<>();
+    public Map<Human, List<String>> findPeopleByName(String surname) {
+        Map<Human, List<String>> result = new HashMap<>();
         for (Map.Entry<Human, List<String>> entry : phoneBook.entrySet()) {
-            if (entry.getKey().getName().contains(name)) {
-                filteredPhoneBook.put(entry.getKey(), entry.getValue());
+            Human human = entry.getKey();
+            if (human.getSurname().startsWith(surname)) {
+                result.put(human, entry.getValue());
             }
         }
-        return filteredPhoneBook;
+        return result;
     }
 
 }

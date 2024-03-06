@@ -2,22 +2,22 @@ package org.example.task_13;
 
 public class Group {
     private final int id;
-    private final int[] data;
+    private final int[] nums;
 
     public Group(int id, int... data) {
         this.id = id;
-        this.data = data;
+        this.nums = data;
     }
 
     public int getId() {
         return id;
     }
 
-    public int[] getData() {
-        return data;
+    public int[] getNums() {
+        return nums;
     }
 
     public int length() {
-        return data.length;
+        return nums.length;
     }
 }

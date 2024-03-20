@@ -1,9 +1,10 @@
-package org.example;
+package org.example.houseFlatPerson;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class House {
+public class House implements Serializable {
     private String cadastralNumber;
     private String address;
     private Person houseHolder;

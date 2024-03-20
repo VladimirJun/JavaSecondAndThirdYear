@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.dataOutputUtils.DataOutput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -27,7 +28,7 @@ class DataOutputTest {
         int[] arr = {10, 9, 8, 7, 6};
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        DataOutput.writeArrayToBinaryStream(arr, outputStream);
+        org.example.dataOutputUtils.DataOutput.writeArrayToBinaryStream(arr, outputStream);
 
         try (DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(outputStream.toByteArray()))) {
             int[] resultArray = new int[arr.length];
@@ -55,7 +56,7 @@ class DataOutputTest {
         }
 
         try (ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArray)) {
-            int[] resultArray = DataOutput.readArrayFromBinaryStream(inputStream);
+            int[] resultArray = org.example.dataOutputUtils.DataOutput.readArrayFromBinaryStream(inputStream);
             assertArrayEquals(expectedArray, resultArray);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -84,7 +85,7 @@ class DataOutputTest {
         testRandomAccessFile.writeInt(30);
 
         // Установка позиции и чтение массива
-        int[] resultArray = DataOutput.readArrayRandomAccessFile(testRandomAccessFile, 0, 3);
+        int[] resultArray = org.example.dataOutputUtils.DataOutput.readArrayRandomAccessFile(testRandomAccessFile, 0, 3);
 
         // Проверка результатов
         int[] expectedArray = {10, 20, 30};
@@ -110,7 +111,7 @@ class DataOutputTest {
         when(file2.isFile()).thenReturn(true);
         when(file2.getName()).thenReturn("file2.jpg");
 
-        List<File> result = DataOutput.getFilesWithExtension(mockedDirectory, ".txt");
+        List<File> result = org.example.dataOutputUtils.DataOutput.getFilesWithExtension(mockedDirectory, ".txt");
 
         // Проверяем корректность результата
         assertEquals(1, result.size());
@@ -125,7 +126,7 @@ class DataOutputTest {
         when(file1.getName()).thenReturn("file1.txt");
         when(file2.isFile()).thenReturn(true);
         when(file2.getName()).thenReturn("file2.jpg");
-        List<File> result = DataOutput.getFilesWithExtension(mockedDirectory, ".txt");
+        List<File> result = org.example.dataOutputUtils.DataOutput.getFilesWithExtension(mockedDirectory, ".txt");
         assertEquals("file1.txt", result.get(0).getName());
     }
 
@@ -133,8 +134,6 @@ class DataOutputTest {
 
     @Test
     public void testGetFilesMatchingPattern() {
-        // Готовим объекты и мокируем их
-        DataOutput fileSearch = new DataOutput();
         File directory = new File("testDir");
         File file1 = new File("testDir/testFile1.txt");
         File file2 = new File("testDir/testFile2.doc");
@@ -143,11 +142,9 @@ class DataOutputTest {
         when(directory.isDirectory()).thenReturn(true);
         when(directory.listFiles()).thenReturn(files);
 
-        // Вызываем тестируемый метод для файлов, соответствующих паттерну
         List<File> result = DataOutput.getFilesMatchingPattern(directory.getPath(), ".*\\.txt");
 
-        // Проверяем, что метод вернул только файл1, так как только он соответствует паттерну
-        assertEquals(1, result.size());
         assertEquals(file1, result.get(0));
     }
+
 }

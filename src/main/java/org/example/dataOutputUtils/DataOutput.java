@@ -1,4 +1,4 @@
-package org.example;
+package org.example.dataOutputUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -55,13 +55,17 @@ public class DataOutput {
 
         File directory = new File(directoryPath);
         if (directory.exists() && directory.isDirectory()) {
-            File[] files = directory.listFiles();
-            Pattern pattern = Pattern.compile(patternRegex);
+            File[] files = directory.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return Pattern.matches(patternRegex, name);
+                }
+            });
 
             if (files != null) {
                 for (File file : files) {
-                    if (file != null && file.isFile() && pattern.matcher(file.getName()).matches()) {
-                        result.add(file); // Добавляем файл в список, если он соответствует паттерну
+                    if (file != null && file.isFile() && patternRegex.matches(file.getName())) {
+                        result.add(file);
                     }
                 }
             }

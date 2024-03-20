@@ -1,7 +1,9 @@
-package org.example;
+package org.example.houseFlatPerson;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.houseFlatPerson.Flat;
+import org.example.houseFlatPerson.House;
 
 import java.io.*;
 //task6
@@ -48,10 +50,10 @@ public class HouseUtils {
         System.out.println(json);
     }
 
-    public static House deserializeJackson(String house) throws IOException{
+    public static House deserializeJackson(House house) throws IOException{
         ObjectMapper objectMapper = new ObjectMapper();
 
-        return objectMapper.readValue(house, House.class);
+        return objectMapper.readValue(house.toString(), House.class);
     }
     //task 9
     public static boolean compareJsonStrings(String json1, String json2) throws IOException {
@@ -61,6 +63,4 @@ public class HouseUtils {
 
         return node1.equals(node2);
     }
-    //task10
-
 }

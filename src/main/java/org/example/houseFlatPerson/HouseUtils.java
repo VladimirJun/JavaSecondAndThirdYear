@@ -11,8 +11,8 @@ public class HouseUtils {
         public static void serialize(House house, OutputStream outputStream) throws IOException {
             try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
                 objectOutputStream.writeObject(house);
-
             }
+
         }
 
         public static House deserialize(InputStream inputStream) throws IOException, ClassNotFoundException {
@@ -21,40 +21,34 @@ public class HouseUtils {
             }
         }
         //task7
-    public static void writeHouseToCsv(House house, String filename) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write("house_"+house.getCadastralNumber()+"_");
-            writer.newLine();
-            for (Flat flat : house.getFlats()) {
-                writer.write(house.getCadastralNumber());
-                writer.write(';');
-                writer.write(house.getAddress());
-                writer.write(';');
-                writer.write(house.getHouseHolder().toString());
-                writer.write(';');
-                writer.write(String.valueOf(flat.getNumber()));
-                writer.write(';');
-                writer.write(String.valueOf(flat.getArea()));
-                writer.write(';');
-                writer.write(flat.getOwners().toString());
-                writer.newLine();
+        public static void writeHouseToCsv(House house) {
+            String fileName = "house_" + house.getCadastralNumber() + ".csv";
+            try (PrintWriter writer = new PrintWriter(new File(fileName))) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("\tInfo about house\t\n");
+                sb.append("Cadastral Number:\t");
+                sb.append(house.getCadastralNumber()).append(";\n");
+                sb.append("Address:\t");
+                sb.append(house.getAddress()).append(";\n");
+                sb.append("Householder: \t");
+                sb.append(house.getHouseHolder().getFullName());
+                sb.append(";\n");
+                sb.append("\tFlats\n");
+                for (Flat flat : house.getFlats()) {
+                    sb.append("Number:\t");
+                    sb.append(flat.getNumber()).append("\t");
+                    sb.append("Area:\t");
+                    sb.append(flat.getArea()).append("\t");
+                    sb.append("Owner:\t");
+                    sb.append(flat.getOwners()).append("\t");
+                    sb.append("\n");
+                }
+                writer.write(sb.toString());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-        }
-    }
-        //task8*
-    public static void serializeJackson(House house) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        String json = objectMapper.writeValueAsString(house);
-
-        System.out.println(json);
     }
 
-    public static House deserializeJackson(House house) throws IOException{
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        return objectMapper.readValue(house.toString(), House.class);
-    }
     //task 9
     public static boolean compareJsonStrings(String json1, String json2) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();

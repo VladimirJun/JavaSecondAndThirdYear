@@ -50,26 +50,19 @@ public class DataOutput {
     }
 
     //task5
-    public static List<File> getFilesMatchingPattern(String directoryPath, String patternRegex) {
-        List<File> result = new ArrayList<>(); // Создаем и инициализируем список здесь
-
-        File directory = new File(directoryPath);
-        if (directory.exists() && directory.isDirectory()) {
-            File[] files = directory.listFiles(new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String name) {
-                    return Pattern.matches(patternRegex, name);
-                }
-            });
-
-            if (files != null) {
-                for (File file : files) {
-                    if (file != null && file.isFile() && patternRegex.matches(file.getName())) {
-                        result.add(file);
-                    }
+    public static List<String> getFilesMatchingPattern(File directory, String regex) {
+        List<String> result = new ArrayList<>();
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().matches(regex)) {
+                    result.add(file.getAbsolutePath());
+                } else if (file.isDirectory()) {
+                    getFilesMatchingPattern(file, regex);
                 }
             }
         }
         return result;
     }
+
 }

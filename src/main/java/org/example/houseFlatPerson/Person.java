@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Person implements Serializable {
+
+
     private String surname;
     private String name;
     private String patronymic;
     private String birth;
+
 
     public Person(String surname, String name, String patronymic, String birth) {
         this.surname = surname;

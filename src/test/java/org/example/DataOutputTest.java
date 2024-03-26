@@ -7,8 +7,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import static org.example.dataOutputUtils.DataOutput.getFilesMatchingPattern;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -22,7 +25,7 @@ class DataOutputTest {
     public void setUp() {
         mockedDirectory = mock(File.class);
     }
-
+//task1
     @Test
     void writeArrayToBinaryStream() throws IOException {
         int[] arr = {10, 9, 8, 7, 6};
@@ -37,9 +40,36 @@ class DataOutputTest {
             }
             assertArrayEquals(resultArray, arr);
         }
-
     }
 
+    @Test
+    void writeArrayToBinaryStream2() throws IOException {
+        int[] arr = {1, 2, 3, 4, 5, 6};
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        org.example.dataOutputUtils.DataOutput.writeArrayToBinaryStream(arr, outputStream);
+        try (DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(outputStream.toByteArray()))) {
+            int[] resultArray = new int[arr.length];
+            for (int i = 0; i < arr.length; i++) {
+                resultArray[i] = dataInputStream.readInt();
+            }
+            assertArrayEquals(resultArray, arr);
+        }
+    }
+
+    @Test
+    void writeArrayToBinaryStream3() throws IOException {
+        int[] arr = {};
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        org.example.dataOutputUtils.DataOutput.writeArrayToBinaryStream(arr, outputStream);
+        try (DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(outputStream.toByteArray()))) {
+            int[] resultArray = new int[arr.length];
+            for (int i = 0; i < arr.length; i++) {
+                resultArray[i] = dataInputStream.readInt();
+            }
+            assertArrayEquals(resultArray, arr);
+        }
+    }
+//task2
     @Test
     void readArrayFromBinaryStreamTest() {
         int[] expectedArray = {1, 2, 3, 4, 5};
@@ -63,7 +93,7 @@ class DataOutputTest {
         }
     }
 
-
+//task3
     @Test
     void readArrayRandomAccessFile() throws IOException {
         RandomAccessFile testRandomAccessFile = null;
@@ -86,8 +116,6 @@ class DataOutputTest {
 
         // Установка позиции и чтение массива
         int[] resultArray = org.example.dataOutputUtils.DataOutput.readArrayRandomAccessFile(testRandomAccessFile, 0, 3);
-
-        // Проверка результатов
         int[] expectedArray = {10, 20, 30};
         assertArrayEquals(expectedArray, resultArray);
         try {
@@ -96,25 +124,28 @@ class DataOutputTest {
             throw new RuntimeException(e);
         }
     }
-
+//task4(MOCK)
     @Test
     void getFilesWithExtension1() {
-
-
         File file1 = mock(File.class);
         File file2 = mock(File.class);
-
-        // Устанавливаем поведение для заглушек
-        when(mockedDirectory.listFiles()).thenReturn(new File[]{file1, file2});
+        File file3 = mock(File.class);
+        File file4 = mock(File.class);
+        when(mockedDirectory.listFiles()).thenReturn(new File[]{file1, file2, file3, file4});
         when(file1.isFile()).thenReturn(true);
         when(file1.getName()).thenReturn("file1.txt");
         when(file2.isFile()).thenReturn(true);
         when(file2.getName()).thenReturn("file2.jpg");
+        when(file3.isFile()).thenReturn(true);
+        when(file3.getName()).thenReturn("file3.jpg");
+        when(file4.isFile()).thenReturn(true);
+        when(file4.getName()).thenReturn("file4.txt");
 
         List<File> result = org.example.dataOutputUtils.DataOutput.getFilesWithExtension(mockedDirectory, ".txt");
-
-        // Проверяем корректность результата
-        assertEquals(1, result.size());
+        List<File> expected = new ArrayList<>();
+        expected.add(file1);
+        expected.add(file4);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -130,21 +161,44 @@ class DataOutputTest {
         assertEquals("file1.txt", result.get(0).getName());
     }
 
-
-
+    @Test
+    void getFilesWithExtension3() {
+        File file1 = mock(File.class);
+        File file2 = mock(File.class);
+        File file3 = mock(File.class);
+        when(mockedDirectory.listFiles()).thenReturn(new File[]{file1, file2, file3});
+        when(file1.isFile()).thenReturn(true);
+        when(file1.getName()).thenReturn("file1.cpp");
+        when(file2.isFile()).thenReturn(true);
+        when(file2.getName()).thenReturn("file2.jpg");
+        when(file2.isFile()).thenReturn(true);
+        when(file2.getName()).thenReturn("file3.pptx");
+        List<File> result = org.example.dataOutputUtils.DataOutput.getFilesWithExtension(mockedDirectory, ".txt");
+        assertEquals(result, new ArrayList<File>());
+    }
+//task5(FIX ME)
     @Test
     public void testGetFilesMatchingPattern() {
-        File directory = new File("testDir");
-        File file1 = new File("testDir/testFile1.txt");
-        File file2 = new File("testDir/testFile2.doc");
-        File[] files = new File[]{file1, file2};
-        when(directory.exists()).thenReturn(true);
-        when(directory.isDirectory()).thenReturn(true);
-        when(directory.listFiles()).thenReturn(files);
+        File file1 = mock(File.class);
+        File file2 = mock(File.class);
+        File directory = mock(File.class);
 
-        List<File> result = DataOutput.getFilesMatchingPattern(directory.getPath(), ".*\\.txt");
+        // Устанавливаем поведение для заглушек
+        Mockito.when(directory.listFiles()).thenReturn(new File[]{file1, file2});
+        Mockito.when(file1.getName()).thenReturn("file1.txt");
+        Mockito.when(file2.getName()).thenReturn("file2.jpg");
+        Mockito.when(file1.isDirectory()).thenReturn(false);
+        Mockito.when(file2.isDirectory()).thenReturn(false);
 
-        assertEquals(file1, result.get(0));
+        String patternRegex = ".*\\.txt"; // Паттерн для поиска файлов с расширением .txt
+        getFilesMatchingPattern(directory, patternRegex);
     }
+    @Test
+    public void testGetFilesMatchingPattern2() {
+        String directoryPath = "/path/to/directory";
+        String patternRegex = ". * \\.txt";
+        List<String> expectedFiles = Arrays.asList("/path/to/directory/file1.txt", "/path/to/directory/file2.txt");
+        System.out.println(DataOutput.getFilesMatchingPattern(new File(directoryPath),patternRegex));
 
+    }
 }

@@ -6,12 +6,15 @@ import java.util.Objects;
 
 
 public class Flat implements Serializable {
+
     private int number;
     private double area;
+
     private List<Person> owners;
     public Flat(int number, double area, List<Person> owners) {
         this.number = number;
         this.area = area;
+
         this.owners = owners;
     }
 
@@ -38,6 +41,8 @@ public class Flat implements Serializable {
     public void setOwners(List<Person> owners) {
         this.owners = owners;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

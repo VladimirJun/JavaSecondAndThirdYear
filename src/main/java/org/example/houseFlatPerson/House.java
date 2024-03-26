@@ -1,5 +1,8 @@
 package org.example.houseFlatPerson;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -70,5 +73,25 @@ public class House implements Serializable {
                 ", houseHolder=" + houseHolder +
                 ", flats=" + flats +
                 '}';
+    }
+    //task8*
+    public String serializeJackson(House house) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public  House deserializeJackson(String json) throws IOException{
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(json, House.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

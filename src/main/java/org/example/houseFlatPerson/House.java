@@ -1,22 +1,31 @@
 package org.example.houseFlatPerson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.example.Task10.HouseDeserializer;
+import org.example.Task10.HouseSerializer;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-
+@JsonSerialize(using = HouseSerializer.class)
+@JsonDeserialize(using = HouseDeserializer.class)
 public class House implements Serializable {
+
     private String cadastralNumber;
     private String address;
     private Person houseHolder;
     private List<Flat> flats;
 
-    public House(String cadastralNumber, String address, Person seniorPerson, List<Flat> flats) {
+    public House() {
+    }
+
+    public House(String cadastralNumber, String address, Person houseHolder, List<Flat> flats) {
         this.cadastralNumber = cadastralNumber;
         this.address = address;
-        this.houseHolder = seniorPerson;
+        this.houseHolder = houseHolder;
         this.flats = flats;
     }
 
@@ -79,9 +88,8 @@ public class House implements Serializable {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.writeValueAsString(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        } finally {
+
         }
     }
 
@@ -89,9 +97,8 @@ public class House implements Serializable {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.readValue(json, House.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        } finally {
+
         }
     }
 }

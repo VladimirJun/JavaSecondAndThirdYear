@@ -1,20 +1,26 @@
 package org.example.houseFlatPerson;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.example.Task10.FlatDeserializer;
+import org.example.Task10.FlatSerializer;
+import org.example.Task10.PersonDeserializer;
+import org.example.Task10.PersonSerializer;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-
+@JsonSerialize(using = FlatSerializer.class)
+@JsonDeserialize(using = FlatDeserializer.class)
 public class Flat implements Serializable {
 
     private int number;
     private double area;
-
     private List<Person> owners;
     public Flat(int number, double area, List<Person> owners) {
         this.number = number;
         this.area = area;
-
         this.owners = owners;
     }
 

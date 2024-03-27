@@ -3,7 +3,9 @@ package org.example.Task10;
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.example.houseFlatPerson.Person;
@@ -11,19 +13,31 @@ import org.example.houseFlatPerson.Person;
 import java.io.IOException;
 import java.io.Serializable;
 
-public class PersonDeserializer extends com.fasterxml.jackson.databind.JsonDeserializer {
+public class PersonDeserializer extends JsonDeserializer<Person> {
     @Override
-    public Object deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
-        Person person = new Person("", ",", "", "");
-        jsonParser.nextToken(); // advance the parser
-        person.setSurname(jsonParser.getText());
-        jsonParser.nextToken(); // consume END_OBJECT
-        person.setName(jsonParser.getText());
-        jsonParser.nextToken();
-        person.setPatronymic(jsonParser.getText());
-        jsonParser.nextToken();
-        person.setBirth(jsonParser.getText());
-        jsonParser.nextToken();
+    public Person deserialize(JsonParser parser, DeserializationContext deserializationContext) throws IOException {
+        String surname = "";
+        String name = "";
+        String patronymic = "";
+        String birth = "";
+        while (parser.nextToken() != JsonToken.END_OBJECT) {
+            String fieldname = parser.getCurrentName();
+            if ("surname".equals(fieldname)) {
+                parser.nextToken(); // сдвигаемся на значение
+                surname = parser.getText();
+            } else if ("name".equals(fieldname)) {
+                parser.nextToken();
+                name = parser.getText();
+            } else if("patronymic".equals(fieldname)){
+                parser.nextToken();
+                patronymic = parser.getText();
+            } else if("birth".equals(fieldname)){
+                parser.nextToken();
+                birth = parser.getText();
+            }
+        }
+        Person person = new Person(surname, name, patronymic, birth); // объект готов
         return person;
     }
+
 }

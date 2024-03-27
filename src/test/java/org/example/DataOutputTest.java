@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.dataOutputUtils.DataOutput;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -11,9 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.example.dataOutputUtils.DataOutput.getFilesMatchingPattern;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -69,7 +69,6 @@ class DataOutputTest {
             assertArrayEquals(resultArray, arr);
         }
     }
-//task2
     @Test
     void readArrayFromBinaryStreamTest() {
         int[] expectedArray = {1, 2, 3, 4, 5};
@@ -91,6 +90,25 @@ class DataOutputTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    //task2
+    @Test
+    public void testWriteArrayToStream() {
+        StringWriter stringWriter = new StringWriter();
+        int[] array = {1, 2, 3, 4, 5};
+
+        DataOutput.writeArrayToStream(array, stringWriter);
+
+        String result = stringWriter.toString();
+        assertEquals("1 2 3 4 5 ", result);
+    }
+    @Test
+    public void testReadArrayFromStream() {
+        int[] array = new int[5];
+        Reader reader = new StringReader("1 2 3 4 5");
+        DataOutput.readArrayFromStream(array, reader);
+
+        Assertions.assertArrayEquals(new int[]{1, 2, 3, 4, 5}, array);
     }
 
 //task3
@@ -178,27 +196,16 @@ class DataOutputTest {
     }
 //task5(FIX ME)
     @Test
-    public void testGetFilesMatchingPattern() {
+    public void testFindFilesByRegex() {
         File file1 = mock(File.class);
         File file2 = mock(File.class);
-        File directory = mock(File.class);
-
-        // Устанавливаем поведение для заглушек
-        Mockito.when(directory.listFiles()).thenReturn(new File[]{file1, file2});
-        Mockito.when(file1.getName()).thenReturn("file1.txt");
-        Mockito.when(file2.getName()).thenReturn("file2.jpg");
-        Mockito.when(file1.isDirectory()).thenReturn(false);
-        Mockito.when(file2.isDirectory()).thenReturn(false);
-
-        String patternRegex = ".*\\.txt"; // Паттерн для поиска файлов с расширением .txt
-        getFilesMatchingPattern(directory, patternRegex);
-    }
-    @Test
-    public void testGetFilesMatchingPattern2() {
-        String directoryPath = "/path/to/directory";
-        String patternRegex = ". * \\.txt";
-        List<String> expectedFiles = Arrays.asList("/path/to/directory/file1.txt", "/path/to/directory/file2.txt");
-        System.out.println(DataOutput.getFilesMatchingPattern(new File(directoryPath),patternRegex));
-
+        when(mockedDirectory.listFiles()).thenReturn(new File[]{file1, file2});
+        when(file1.isFile()).thenReturn(true);
+        when(file1.getName()).thenReturn("file1.txt");
+        when(file2.isFile()).thenReturn(true);
+        when(file2.getName()).thenReturn("file2.txt");
+        DataOutput fileUtils = new DataOutput();
+        List<String> files = fileUtils.findFilesByRegex("C:\\TestFolder", ".*\\.txt");
+        assertEquals(2, files.size());
     }
 }

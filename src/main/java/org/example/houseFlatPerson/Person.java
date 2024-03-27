@@ -1,7 +1,14 @@
 package org.example.houseFlatPerson;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.example.Task10.PersonDeserializer;
+import org.example.Task10.PersonSerializer;
+
 import java.io.Serializable;
 import java.util.Objects;
+@JsonSerialize(using = PersonSerializer.class)
+@JsonDeserialize(using = PersonDeserializer.class)
 
 public class Person implements Serializable {
 
@@ -11,6 +18,8 @@ public class Person implements Serializable {
     private String patronymic;
     private String birth;
 
+    public Person() {
+    }
 
     public Person(String surname, String name, String patronymic, String birth) {
         this.surname = surname;

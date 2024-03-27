@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
-
 public class DataOutput {
     //task1
     public static void writeArrayToBinaryStream(int[] array, OutputStream outputStream) throws IOException {
@@ -16,17 +15,41 @@ public class DataOutput {
         dataOutputStream.flush();
         dataOutputStream.close();
     }
-
-    //task2
     public static int[] readArrayFromBinaryStream(InputStream inputStream) throws IOException {
         DataInputStream dataInputStream = new DataInputStream(inputStream);
-        int[] array = new int[dataInputStream.available() / 4];
+        int[] array = new int[dataInputStream.available()/4];
         for (int i = 0; i < array.length; i++) {
             array[i] = dataInputStream.readInt();
         }
         dataInputStream.close();
         return array;
     }
+
+    public static void writeArrayToStream(int[] array, Writer writer) {
+        for (int num : array) {
+            try {
+                writer.write(num + " ");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void readArrayFromStream(int[] array, Reader reader) {
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String[] strNums;
+        try {
+            String line = bufferedReader.readLine();
+            strNums = line.split(" ");
+            for (int i = 0; i < array.length; i++) {
+                array[i] = Integer.parseInt(strNums[i]);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     //task3
     public static int[] readArrayRandomAccessFile(RandomAccessFile randomAccessFile, long position, int length) throws IOException {
@@ -50,18 +73,24 @@ public class DataOutput {
     }
 
     //task5
-    public static List<String> getFilesMatchingPattern(File directory, String regex) {
+    public List<String> findFilesByRegex(String directoryPath, String regex) {
         List<String> result = new ArrayList<>();
+        File directory = new File(directoryPath);
+        if (!directory.exists() || !directory.isDirectory()) {
+            return result;
+        }
+
         File[] files = directory.listFiles();
         if (files != null) {
             for (File file : files) {
-                if (file.isFile() && file.getName().matches(regex)) {
+                if (file.isDirectory()) {
+                    result.addAll(findFilesByRegex(file.getAbsolutePath(), regex));
+                } else if (Pattern.matches(regex, file.getName())) {
                     result.add(file.getAbsolutePath());
-                } else if (file.isDirectory()) {
-                    getFilesMatchingPattern(file, regex);
                 }
             }
         }
+
         return result;
     }
 

@@ -5,19 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
+
 public class DataOutput {
     //task1
     public static void writeArrayToBinaryStream(int[] array, OutputStream outputStream) throws IOException {
-        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-        for (int i = 0; i < array.length; i++) {
-            dataOutputStream.writeInt(array[i]);
+        try (DataOutputStream dataOutputStream = new DataOutputStream(outputStream)) {
+            for (int j : array) {
+                dataOutputStream.writeInt(j);
+            }
         }
-        dataOutputStream.flush();
-        dataOutputStream.close();
     }
+
     public static int[] readArrayFromBinaryStream(InputStream inputStream) throws IOException {
         DataInputStream dataInputStream = new DataInputStream(inputStream);
-        int[] array = new int[dataInputStream.available()/4];
+        int[] array = new int[dataInputStream.available() / 4];
         for (int i = 0; i < array.length; i++) {
             array[i] = dataInputStream.readInt();
         }
@@ -25,13 +26,15 @@ public class DataOutput {
         return array;
     }
 
+    //task2
     public static void writeArrayToStream(int[] array, Writer writer) {
-        for (int num : array) {
-            try {
+        try {
+            for (int num : array) {
                 writer.write(num + " ");
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -39,20 +42,21 @@ public class DataOutput {
         BufferedReader bufferedReader = new BufferedReader(reader);
         String[] strNums;
         try {
+            bufferedReader.lines();
             String line = bufferedReader.readLine();
             strNums = line.split(" ");
             for (int i = 0; i < array.length; i++) {
                 array[i] = Integer.parseInt(strNums[i]);
             }
+            bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-
     //task3
-    public static int[] readArrayRandomAccessFile(RandomAccessFile randomAccessFile, long position, int length) throws IOException {
+    public static int[] readArrayRandomAccessFile(RandomAccessFile randomAccessFile, int position, int length) throws IOException {
         randomAccessFile.seek(position);
         int[] array = new int[length];
         for (int i = 0; i < length; i++) {

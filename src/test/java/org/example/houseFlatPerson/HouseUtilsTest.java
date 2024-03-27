@@ -1,14 +1,23 @@
 package org.example.houseFlatPerson;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import org.example.Task10.HouseSerializer;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class HouseUtilsTest {
     //task6
@@ -61,8 +70,21 @@ class HouseUtilsTest {
         House house = new House("86422", "123 Main St", new Person("Петров", "Владимир", "Юрьевич", "11.06.2004"), new ArrayList<>());
         HouseUtils.writeHouseToCsv(house);
     }
-
-
+//    @Test
+//    public void testSerializeJackson() throws IOException {
+//
+//        House house = new House("123456789", "Test Address",new Person("Петров", "Владимир", "Юрьевич", "11.06.2004") , new ArrayList<>());
+//        System.out.println(House.serializeJackson(house));
+//        assertEquals(House.serializeJackson(house),"{\"cadastralNumber\":\"123456789\",\"address\":\"Test Address\",\"houseHolder\":{\"fullName\":\"Петров Владимир Юрьевич\",\"birth\":\"11.06.2004\"},\"flats\":[]}");
+//
+//    }
+    @Test
+    public void testDeserializeHouse() throws IOException {
+        String json = "{\"cadastralNumber\":\"1\",\"address\":\"House1\",\"houseHolder\":{\"surname\":\"Петров\",\"name\":\"Владимир\",\"patronymic\":\"Юрьевич\",\"birth\":\"11.06.2004\"},\"flats\":[]}";
+        House h1 = House.deserializeJackson(json);
+        House expected = new House("1","House1", new Person("Петров","Владимир","Юрьевич","11.06.2004"), new ArrayList<Flat>());
+        assertEquals(h1.toString(),expected.toString());
+    }
 //task9
     @Test
     public void testCompareJsonStrings_SameJson() throws IOException {

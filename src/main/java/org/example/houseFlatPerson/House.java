@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+
 @JsonSerialize(using = HouseSerializer.class)
 @JsonDeserialize(using = HouseDeserializer.class)
 public class House implements Serializable {
@@ -83,22 +84,20 @@ public class House implements Serializable {
                 ", flats=" + flats +
                 '}';
     }
+
     //task8*
-    public String serializeJackson(House house) throws IOException {
+    public static String serializeJackson(House house) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.writeValueAsString(this);
-        } finally {
-
+            return objectMapper.writeValueAsString(house);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
-    public  House deserializeJackson(String json) throws IOException{
+    public static House deserializeJackson(String json) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.readValue(json, House.class);
-        } finally {
-
-        }
+        return objectMapper.readValue(json, House.class);
     }
 }

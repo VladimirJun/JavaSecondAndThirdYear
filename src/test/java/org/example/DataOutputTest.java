@@ -8,6 +8,7 @@ import org.mockito.Mock;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -23,13 +24,13 @@ class DataOutputTest {
     public void setUp() {
         mockedDirectory = mock(File.class);
     }
-//task1
+    //task1
     @Test
     void writeArrayToBinaryStream() throws IOException {
         int[] arr = {10, 9, 8, 7, 6};
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         DataOutput.writeArrayToBinaryStream(arr, outputStream);
-        assertArrayEquals(new byte[]{0,0,0,10, 0,0,0,9, 0,0,0,8, 0,0,0,7, 0,0,0,6}, outputStream.toByteArray());
+        assertArrayEquals(new byte[]{0, 0, 0, 10, 0, 0, 0, 9, 0, 0, 0, 8, 0, 0, 0, 7, 0, 0, 0, 6}, outputStream.toByteArray());
 
 
         try (DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(outputStream.toByteArray()))) {
@@ -65,6 +66,7 @@ class DataOutputTest {
             assertArrayEquals(resultArray, arr);
         }
     }
+
     @Test
     void readArrayFromBinaryStreamTest() {
         int[] expectedArray = {1, 2, 3, 4, 5};
@@ -86,6 +88,7 @@ class DataOutputTest {
             throw new RuntimeException(e);
         }
     }
+
     //task2
     @Test
     public void testWriteArrayToStream() {
@@ -97,6 +100,7 @@ class DataOutputTest {
         String result = stringWriter.toString();
         assertEquals("1 2 3 4 5 ", result);
     }
+
     @Test
     public void testReadArrayFromStream() {
         int[] array = new int[5];
@@ -106,7 +110,7 @@ class DataOutputTest {
         Assertions.assertArrayEquals(new int[]{1, 2, 3, 4, 5}, array);
     }
 
-//task3
+    //task3
     @Test
     void readArrayRandomAccessFile() throws IOException {
         RandomAccessFile testRandomAccessFile = null;
@@ -126,7 +130,8 @@ class DataOutputTest {
         }
 
     }
-//task4(MOCK)
+
+    //task4(MOCK)
     @Test
     void getFilesWithExtension1() {
         File file1 = mock(File.class);
@@ -159,7 +164,7 @@ class DataOutputTest {
         when(file1.getName()).thenReturn("file1.txt");
         when(file2.isFile()).thenReturn(true);
         when(file2.getName()).thenReturn("file2.jpg");
-        List<File> result = org.example.dataOutputUtils.DataOutput.getFilesWithExtension(mockedDirectory, ".txt");
+        List<File> result = DataOutput.getFilesWithExtension(mockedDirectory, ".txt");
         assertEquals("file1.txt", result.get(0).getName());
     }
 
@@ -178,18 +183,27 @@ class DataOutputTest {
         List<File> result = org.example.dataOutputUtils.DataOutput.getFilesWithExtension(mockedDirectory, ".txt");
         assertEquals(result, new ArrayList<File>());
     }
-//task5(FIX ME)
-//    @Test
-//    public void testFindFilesByRegex() {
-//        File file1 = mock(File.class);
-//        File file2 = mock(File.class);
-//        when(mockedDirectory.listFiles()).thenReturn(new File[]{file1, file2});
-//        when(file1.isFile()).thenReturn(true);
-//        when(file1.getName()).thenReturn("file1.txt");
-//        when(file2.isFile()).thenReturn(true);
-//        when(file2.getName()).thenReturn("file2.txt");
-//        DataOutput fileUtils = new DataOutput();
-//        List<String> files = fileUtils.findFilesByRegex("C:\\TestFolder", ".*\\.txt");
-//        assertEquals(2, files.size());
-//    }
+    //task5
+
+
+    @Test
+    public void testFilterByNameRegex2() throws IOException {
+        File f3 = new File("D:\\Coding\\lab7\\testDir");
+        List<File> filteredFiles = DataOutput.filterByNameRegex(f3, ".*\\.txt");
+        File expected1 = new File("D:\\Coding\\lab7\\testDir\\accept1.txt");
+        File expected2 = new File("D:\\Coding\\lab7\\testDir\\testDir2\\accept2.txt");
+        List<File> actual = new ArrayList<File>();
+        actual.add(expected1);
+        actual.add(expected2);
+        assertEquals(filteredFiles,actual);
+    }
+
+    @Test
+    public void testFilterByNameRegex3() throws IOException {
+        File f1 = new File("D:\\Coding\\lab7\\src\\main\\java\\org\\example\\houseFlatPerson");
+        List<File> filteredFiles = DataOutput.filterByNameRegex(f1, ".*\\.txt");
+        assertEquals(filteredFiles,new ArrayList<File>());
+    }
+
 }
+

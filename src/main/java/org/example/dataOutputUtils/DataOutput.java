@@ -77,24 +77,20 @@ public class DataOutput {
     }
 
     //task5
-    public List<String> findFilesByRegex(String directoryPath, String regex) {
-        List<String> result = new ArrayList<>();
-        File directory = new File(directoryPath);
-        if (!directory.exists() || !directory.isDirectory()) {
-            return result;
-        }
+    public static List<File> filterByNameRegex(File root, String regex) {
+        List<File> result = new ArrayList<>();
+        if (root.isDirectory()) {
+            File[] files = root.listFiles();
+            if (files == null) return result;
 
-        File[] files = directory.listFiles();
-        if (files != null) {
             for (File file : files) {
                 if (file.isDirectory()) {
-                    result.addAll(findFilesByRegex(file.getAbsolutePath(), regex));
+                    result.addAll(DataOutput.filterByNameRegex(file, regex));
                 } else if (Pattern.matches(regex, file.getName())) {
-                    result.add(file.getAbsolutePath());
+                    result.add(file);
                 }
             }
         }
-
         return result;
     }
 

@@ -34,15 +34,24 @@ public class HouseUtils {
                 sb.append(house.getHouseHolder().getFullName());
                 sb.append(";\n");
                 sb.append("\tFlats\n");
+                sb.append("№:");
                 for (Flat flat : house.getFlats()) {
-                    sb.append("Number:\t");
-                    sb.append(flat.getNumber()).append("\t");
-                    sb.append("Area:\t");
-                    sb.append(flat.getArea()).append("\t");
-                    sb.append("Owner:\t");
-                    sb.append(flat.getOwners()).append("\t");
-                    sb.append("\n");
+                    sb.append(flat.getNumber()).append(";");
                 }
+                sb.append("\n");
+
+                    sb.append("Area:");
+                    for (Flat flat : house.getFlats()) {
+                        sb.append(flat.getArea()).append(";");
+                    }
+                sb.append("\n");
+                sb.append("Owners:");
+                for (Flat flat : house.getFlats()) {
+                    for (Person owner : flat.getOwners()) {
+                        sb.append(owner.getSurname()).append(" ").append(owner.getName().charAt(0)).append(".").append(owner.getPatronymic().charAt(0)).append('.').append(";");
+                    }
+                }
+                sb.append("\n");
                 writer.write(sb.toString());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

@@ -1,9 +1,6 @@
 package org.example.Task10;
 
-import com.fasterxml.jackson.core.JacksonException;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,8 +33,7 @@ public class PersonDeserializer extends JsonDeserializer<Person> {
                 birth = parser.getText();
             }
         }
-        Person person = new Person(surname, name, patronymic, birth); // объект готов
-        return person;
+        return new Person(surname, name, patronymic, birth);
     }
 
 }

@@ -30,25 +30,18 @@ public class HouseDeserializer extends StdDeserializer<House> {
         while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
             String fieldname = jsonParser.getCurrentName();
             jsonParser.nextToken(); // мы должны двигаться на значение
-
             switch (fieldname) {
-                case "cadastralNumber":
-                    cadastralNumber = jsonParser.getValueAsString();
-                    break;
-                case "address":
-                    address = jsonParser.getValueAsString();
-                    break;
-                case "houseHolder":
-                    houseHolder = jsonParser.readValueAs(Person.class);
-                    break;
-                case "flats":
+                case "cadastralNumber" -> cadastralNumber = jsonParser.getValueAsString();
+                case "address" -> address = jsonParser.getValueAsString();
+                case "houseHolder" -> houseHolder = jsonParser.readValueAs(Person.class);
+                case "flats" -> {
                     ObjectMapper mapper = new ObjectMapper();
                     JsonNode node = jsonParser.readValueAsTree();
                     for (JsonNode flatNode : node) {
                         Flat flat = mapper.treeToValue(flatNode, Flat.class);
                         flats.add(flat);
                     }
-                    break;
+                }
             }
         }
         return new House(cadastralNumber, address, houseHolder, flats);

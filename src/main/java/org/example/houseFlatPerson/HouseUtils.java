@@ -2,60 +2,52 @@ package org.example.houseFlatPerson;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.houseFlatPerson.Flat;
-import org.example.houseFlatPerson.House;
 
 import java.io.*;
+
 //task6
 public class HouseUtils {
-        public static void serialize(House house, OutputStream outputStream) throws IOException {
-            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
-                objectOutputStream.writeObject(house);
-            }
-
+    public static void serialize(House house, OutputStream outputStream) throws IOException {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
+            objectOutputStream.writeObject(house);
         }
 
-        public static House deserialize(InputStream inputStream) throws IOException, ClassNotFoundException {
-            try (ObjectInputStream objectInputStream = new ObjectInputStream(inputStream)) {
-                return (House) objectInputStream.readObject();
-            }
-        }
-        //task7
-        public static void writeHouseToCsv(House house) {
-            String fileName = "house_" + house.getCadastralNumber() + ".csv";
-            try (PrintWriter writer = new PrintWriter(new File(fileName))) {
-                StringBuilder sb = new StringBuilder();
-                sb.append("\tInfo about house\t\n");
-                sb.append("Cadastral Number:\t");
-                sb.append(house.getCadastralNumber()).append(";\n");
-                sb.append("Address:\t");
-                sb.append(house.getAddress()).append(";\n");
-                sb.append("Householder: \t");
-                sb.append(house.getHouseHolder().getFullName());
-                sb.append(";\n");
-                sb.append("\tFlats\n");
-                sb.append("№:");
-                for (Flat flat : house.getFlats()) {
-                    sb.append(flat.getNumber()).append(";");
-                }
-                sb.append("\n");
+    }
 
-                    sb.append("Area:");
-                    for (Flat flat : house.getFlats()) {
-                        sb.append(flat.getArea()).append(";");
-                    }
-                sb.append("\n");
-                sb.append("Owners:");
-                for (Flat flat : house.getFlats()) {
-                    for (Person owner : flat.getOwners()) {
-                        sb.append(owner.getSurname()).append(" ").append(owner.getName().charAt(0)).append(".").append(owner.getPatronymic().charAt(0)).append('.').append(";");
-                    }
-                }
-                sb.append("\n");
-                writer.write(sb.toString());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+    public static House deserialize(InputStream inputStream) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(inputStream)) {
+            return (House) objectInputStream.readObject();
+        }
+    }
+
+    //task7
+    public static void writeHouseToCsv(House house) {
+        String fileName = "house_" + house.getCadastralNumber() + ".csv";
+        try (PrintWriter writer = new PrintWriter(new File(fileName))) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("\tInfo about house\t\n");
+            sb.append("Cadastral Number:\t");
+            sb.append(house.getCadastralNumber()).append(";\n");
+            sb.append("Address:\t");
+            sb.append(house.getAddress()).append(";\n");
+            sb.append("Householder: \t");
+            sb.append(house.getHouseHolder().getFullName());
+            sb.append(";\n");
+            sb.append("\tFlats\n");
+            sb.append("№:").append("Area:").append("Owners:");
+            sb.append("\n");
+           for (Flat flat: house.getFlats()){
+               sb.append(flat.getNumber()).append(";");
+               sb.append(flat.getArea()).append(";");
+               for (Person owner: flat.getOwners()){
+                   sb.append(owner.getSurname()+" "+owner.getName().charAt(0)+"."+owner.getPatronymic().charAt(0)).append(".").append(";");
+                   sb.append("\n");
+               }
+           }
+            writer.write(sb.toString());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 

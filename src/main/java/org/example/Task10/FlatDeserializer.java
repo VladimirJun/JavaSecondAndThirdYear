@@ -17,29 +17,13 @@ import java.util.List;
 public class FlatDeserializer extends JsonDeserializer<Flat> {
 
     @Override
-    public Flat deserialize(JsonParser parser, DeserializationContext deserializationContext) throws IOException, JacksonException {
-        int number = 0;
-        double area = 0;
-        List<Person> owners = new ArrayList<>();
-        while (parser.nextToken() != JsonToken.END_OBJECT) {
-            String fieldname = parser.getCurrentName();
-            parser.nextToken(); // мы должны двигаться на значение
-            switch (fieldname) {
-                case "number":
-                    number = parser .getValueAsInt();
-                    break;
-                case "area":
-                    area = parser.getDoubleValue();
-                    break;
-                case "owners":
-                    ObjectMapper mapper = new ObjectMapper();
-                    JsonNode node = parser.readValueAsTree();
-                    for (JsonNode personNode : node) {
-                        Person person = mapper.treeToValue(personNode, Person.class);
-                        owners.add(person);
-                    }
-                    break;
-            }
+    public Flat deserialize(JsonParser parser, DeserializationContext context) throws IOException, JacksonException {
+        final JsonNode tree = context.readTree(parser);
+        final int number = tree.get("number").asInt();
+        final double area = tree.get("area").asDouble();
+        final List<Person> owners = new ArrayList<>();
+        for (JsonNode node : tree.get("owners")) {
+            owners.add(context.readTreeAsValue(node, Person.class));
         }
         return new Flat(number, area, owners);
     }

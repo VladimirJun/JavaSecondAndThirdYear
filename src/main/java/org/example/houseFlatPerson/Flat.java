@@ -4,9 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.example.Task10.FlatDeserializer;
 import org.example.Task10.FlatSerializer;
-import org.example.Task10.PersonDeserializer;
-import org.example.Task10.PersonSerializer;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;

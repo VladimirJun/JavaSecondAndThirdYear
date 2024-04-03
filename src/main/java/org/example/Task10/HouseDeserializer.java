@@ -22,28 +22,16 @@ public class HouseDeserializer extends StdDeserializer<House> {
     }
 
     @Override
-    public House deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        String cadastralNumber = "";
-        String address = "";
-        Person houseHolder = new Person();
-        List<Flat> flats = new ArrayList<>();
-        while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
-            String fieldname = jsonParser.getCurrentName();
-            jsonParser.nextToken(); // мы должны двигаться на значение
-            switch (fieldname) {
-                case "cadastralNumber" -> cadastralNumber = jsonParser.getValueAsString();
-                case "address" -> address = jsonParser.getValueAsString();
-                case "houseHolder" -> houseHolder = jsonParser.readValueAs(Person.class);
-                case "flats" -> {
-                    ObjectMapper mapper = new ObjectMapper();
-                    JsonNode node = jsonParser.readValueAsTree();
-                    for (JsonNode flatNode : node) {
-                        Flat flat = mapper.treeToValue(flatNode, Flat.class);
-                        flats.add(flat);
-                    }
-                }
-            }
+    public House deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+        final JsonNode tree = context.readTree(parser);
+        final String cadastralNumber = tree.get("cadastralNumber").asText();
+        final String address = tree.get("address").asText();
+        final Person houseHolder = context.readValue(tree.get("houseHolder").traverse(), Person.class);
+        final List<Flat> flats = new ArrayList<>();
+        for (JsonNode node : tree.get("flats")) {
+            flats.add(context.readTreeAsValue(node, Flat.class));
         }
+
         return new House(cadastralNumber, address, houseHolder, flats);
     }
 }

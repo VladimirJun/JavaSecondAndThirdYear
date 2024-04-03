@@ -14,7 +14,9 @@ public class HouseSerializer extends com.fasterxml.jackson.databind.JsonSerializ
         jsonGenerator.writeStartObject();
         jsonGenerator.writeStringField("cadastralNumber", house.getCadastralNumber());
         jsonGenerator.writeStringField("address", house.getAddress());
+        jsonGenerator.writeFieldName("houseHolder");
         jsonGenerator.writeObject(house.getHouseHolder());
+        jsonGenerator.writeFieldName("flats");
         jsonGenerator.writeObject(house.getFlats());
         jsonGenerator.writeEndObject();
 

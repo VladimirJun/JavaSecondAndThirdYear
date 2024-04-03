@@ -3,12 +3,14 @@ package org.example.Task10;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.example.houseFlatPerson.Person;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class PersonDeserializer extends JsonDeserializer<Person> {
     @Override
@@ -19,15 +21,15 @@ public class PersonDeserializer extends JsonDeserializer<Person> {
         String birth = "";
         while (parser.nextToken() != JsonToken.END_OBJECT) {
             String fieldname = parser.getCurrentName();
-            if ("surname".equals(fieldname)) {
+            if ("fullName".equals(fieldname)) {
                 parser.nextToken(); // сдвигаемся на значение
-                surname = parser.getText();
-            } else if ("name".equals(fieldname)) {
-                parser.nextToken();
-                name = parser.getText();
-            } else if("patronymic".equals(fieldname)){
-                parser.nextToken();
-                patronymic = parser.getText();
+                String fullname = parser.getText();
+                 String[] words = fullname.split(" ");
+                 if (words.length!=3)
+                     throw new JsonMappingException("invalid format of fullname");
+                surname =words[0];
+                name = words[1];
+                patronymic = words[2];
             } else if("birth".equals(fieldname)){
                 parser.nextToken();
                 birth = parser.getText();

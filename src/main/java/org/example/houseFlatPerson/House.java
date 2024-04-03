@@ -86,7 +86,7 @@ public class House implements Serializable {
     }
 
     //task8*
-    public static String serializeJackson(House house) throws IOException {
+    public static String serializeJackson(House house) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.writeValueAsString(house);

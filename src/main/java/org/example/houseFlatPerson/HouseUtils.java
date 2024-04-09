@@ -40,7 +40,7 @@ public class HouseUtils {
                sb.append(flat.getNumber()).append(";");
                sb.append(flat.getArea()).append(";");
                for (Person owner: flat.getOwners()){
-                   sb.append(owner.getSurname()+" "+owner.getName().charAt(0)+"."+owner.getPatronymic().charAt(0)).append(".").append(";");
+                   sb.append(owner.getSurname()).append(" ").append(owner.getName().charAt(0)).append(".").append(owner.getPatronymic().charAt(0)).append(".").append(";");
                    sb.append("\n");
                }
            }

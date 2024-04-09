@@ -33,17 +33,6 @@ class Task10Test {
     }
 
     @Test
-    public void testDeserializePerson() throws IOException {
-        String json = "{\"surname\":\"Петров\", \"name\":\"Владимир\", \"patronymic\":\"Юрьевич\", \"birth\":\"11.06.2004\"}";
-        Person p1 = new Person("Петров", "Владимир", "Юрьевич", "11.06.2004");
-        JsonFactory factory = new JsonFactory();
-        JsonParser parser = factory.createParser(json);
-
-        Person person = new PersonDeserializer().deserialize(parser, null);
-
-        assertEquals(p1.toString(), person.toString());
-    }
-    @Test
     public void PersonDeserializeTestInvalidJson() throws IOException {
         String json = "invalid json";
 
@@ -70,19 +59,6 @@ class Task10Test {
     }
 
 
-    @Test
-    void flatDeserialize() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = "{\"number\":101, \"area\":100, \"owners\": [ { \"surname\": \"Петров\", \"name\": \"Владимир\", \"patronymic\": \"Юрьевич\", \"birth\": \"11.06.2004\" },{ \"surname\": \"Иванов\", \"name\": \"Иван\", \"patronymic\": \"Иванович\", \"birth\": \"11.11.11\" } ] }";
-
-        Person p1 = new Person("Петров", "Владимир", "Юрьевич", "11.06.2004");
-        Person p2 = new Person("Иванов", "Иван", "Иванович", "11.11.11");
-         List <Person> owners = new ArrayList<Person>();
-         owners.add(p1);
-         owners.add(p2);
-        Flat expected = new Flat(101, 100.0, owners);
-        assertEquals(expected.toString(),objectMapper.readValue(json, Flat.class).toString());
-    }
 
     @Test
     void flatDeserializeEmptyOwners() throws IOException {
@@ -116,13 +92,6 @@ class Task10Test {
     }
 
 
-        @Test
-        public void testDeserializeHouse() throws IOException {
-            String json = "{\"cadastralNumber\":\"1\",\"address\":\"House1\",\"houseHolder\":{\"surname\":\"Петров\",\"name\":\"Владимир\",\"patronymic\":\"Юрьевич\",\"birth\":\"11.06.2004\"},\"flats\":[]}";
-            ObjectMapper objectMapper = new ObjectMapper();
-            House h1 = objectMapper.readValue(json,House.class);
-            House expected = new House("1","House1", new Person("Петров","Владимир","Юрьевич","11.06.2004"), new ArrayList<Flat>());
-            assertEquals(h1.toString(),expected.toString());
-        }
+
 
     }

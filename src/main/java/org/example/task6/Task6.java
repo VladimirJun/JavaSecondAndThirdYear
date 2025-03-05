@@ -1,14 +1,16 @@
-package org.example;
+package org.example.task6;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
-public class Task4 {
+public class Task6 {
     public static void main(String[] args) throws InterruptedException {
-        task4();
+        task6();
     }
-    public static void task4() throws InterruptedException {
-        ArrayList<Integer> list = new ArrayList<>();
+    public static void task6() throws InterruptedException {
+        List<Integer> list = Collections.synchronizedList(new ArrayList<>());
         Thread addThread = new Thread(new AddToList(list));
         Thread removeThread = new Thread(new RemoveFromList(list));
 
@@ -18,42 +20,38 @@ public class Task4 {
         addThread.join();
         removeThread.join();
         System.out.println(list);
-        System.out.println("finished");
+        System.out.println("Операции завершены.");
     }
 
     static class AddToList implements Runnable {
-        private final ArrayList<Integer> list;
+        private final List<Integer> list;
 
-        public AddToList(ArrayList<Integer> list) {
+        public AddToList(List<Integer> list) {
             this.list = list;
         }
 
         @Override
         public void run() {
             Random rand = new Random();
-            for (int i = 0; i < 100; i++) {
-                synchronized (list) {
-                    list.add(rand.nextInt());
-                }
+            for (int i = 0; i < 10000; i++) {
+                list.add(rand.nextInt());
             }
         }
     }
 
     static class RemoveFromList implements Runnable {
-        private final ArrayList<Integer> list;
+        private final List<Integer> list;
 
-        public RemoveFromList(ArrayList<Integer> list) {
+        public RemoveFromList(List<Integer> list) {
             this.list = list;
         }
 
         @Override
         public void run() {
             Random rand = new Random();
-            for (int i = 0; i < 100; i++) {
-                synchronized (list) {
-                    if (!list.isEmpty()) {
-                        list.remove(rand.nextInt(list.size()));
-                    }
+            for (int i = 0; i < 10000; i++) {
+                if (!list.isEmpty()) {
+                    list.remove(rand.nextInt(list.size()));
                 }
             }
         }

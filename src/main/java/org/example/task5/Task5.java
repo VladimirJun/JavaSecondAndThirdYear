@@ -1,4 +1,4 @@
-package org.example;
+package org.example.task5;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,7 +13,7 @@ public class Task5 {
 
         Thread addThread = new Thread(listTask::addRandom);
         Thread removeThread = new Thread(listTask::removeRandom);
-
+        System.out.println("started");
         addThread.start();
         removeThread.start();
 
@@ -32,13 +32,13 @@ public class Task5 {
         }
 
         public synchronized void addRandom() {
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 100000; i++) {
                 list.add(rand.nextInt());
             }
         }
 
         public synchronized void removeRandom() {
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 100000; i++) {
                 if (!list.isEmpty()) {
                     list.remove(rand.nextInt(list.size()));
                 }

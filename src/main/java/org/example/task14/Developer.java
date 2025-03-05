@@ -6,6 +6,8 @@ class Developer implements Runnable {
     private final TaskQueue taskQueue;
     private final Random rand = new Random();
 
+
+
     public Developer(TaskQueue queue) {
         this.taskQueue = queue;
     }

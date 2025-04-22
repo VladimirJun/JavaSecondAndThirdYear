@@ -1,0 +1,8 @@
+CREATE TABLE students (
+                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                          first_name VARCHAR(255),
+                          last_name VARCHAR(255),
+                          patronymic VARCHAR(255),
+                          status VARCHAR(255),
+                          group_id BIGINT
+);

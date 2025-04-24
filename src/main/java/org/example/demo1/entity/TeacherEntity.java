@@ -59,6 +59,7 @@ public class TeacherEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "c_id")
+
     private Long id;
     @Column(name = "c_name")
     private String name;

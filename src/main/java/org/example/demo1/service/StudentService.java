@@ -1,6 +1,8 @@
 package org.example.demo1.service;
 
 
+import org.example.demo1.dto.StudentDto;
+
 import java.util.List;
 
 public interface StudentService {

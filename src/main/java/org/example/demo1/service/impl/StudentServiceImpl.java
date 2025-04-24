@@ -4,7 +4,9 @@ package org.example.demo1.service.impl;
 import org.example.demo1.dto.StudentDto;
 import org.example.demo1.entity.GroupEntity;
 import org.example.demo1.entity.StudentEntity;
+import org.example.demo1.exception.NotFoundException;
 import org.example.demo1.mapper.StudentMapper;
+import org.example.demo1.repository.GroupRepository;
 import org.example.demo1.repository.StudentRepository;
 import org.example.demo1.service.StudentService;
 import org.hibernate.service.spi.ServiceException;
@@ -90,7 +92,7 @@ public class StudentServiceImpl implements StudentService {
         try {
 
             StudentEntity student = this.studentRepository.findById(id).orElseThrow(
-                    () -> new ChangeSetPersister.NotFoundException(ENTITY, id)
+                    () -> new NotFoundException(ENTITY, id)
             );
             return this.studentMapper.mapToDto(student);
         } catch (Exception e) {
@@ -102,9 +104,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentDto> getByGroupId(Long id) {
         try {
-
             GroupEntity group = this.groupRepository.findById(id).orElseThrow(
-                    () -> new ChangeSetPersister.NotFoundException("Group", id)
+                    () -> new NotFoundException("Group", id)
             );
             List<StudentEntity> studentsByGroup = group.getStudents();
 

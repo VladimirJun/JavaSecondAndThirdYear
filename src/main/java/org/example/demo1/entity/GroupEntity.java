@@ -12,11 +12,42 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Setter
-@Getter
+
 @Entity
 @Table(name = "t_group")
 public class GroupEntity {
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<StudentEntity> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<StudentEntity> students) {
+        this.students = students;
+    }
+
+    public List<LessonEntity> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<LessonEntity> lessons) {
+        this.lessons = lessons;
+    }
 
     @Id
     @Column(name = "c_id")

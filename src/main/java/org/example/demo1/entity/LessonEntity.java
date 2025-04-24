@@ -19,9 +19,55 @@ import java.util.Map;
 
 @Entity
 @Table(name = "t_lesson")
-@Getter
-@Setter
 public class LessonEntity {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public TeacherEntity getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(TeacherEntity teacher) {
+        this.teacher = teacher;
+    }
+
+    public GroupEntity getGroup() {
+        return group;
+    }
+
+    public void setGroup(GroupEntity group) {
+        this.group = group;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public int getNumberOfLesson() {
+        return numberOfLesson;
+    }
+
+    public void setNumberOfLesson(int numberOfLesson) {
+        this.numberOfLesson = numberOfLesson;
+    }
+
+    public Map<StudentEntity, Boolean> getStudentAttendance() {
+        return studentAttendance;
+    }
+
+    public void setStudentAttendance(Map<StudentEntity, Boolean> studentAttendance) {
+        this.studentAttendance = studentAttendance;
+    }
+
     @Id
     @Column(name = "c_lesson_id")
     @GeneratedValue(strategy = GenerationType.AUTO)

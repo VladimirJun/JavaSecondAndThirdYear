@@ -33,7 +33,7 @@ public class GroupController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new CommonResponse<>(
-                        this.groupService.addGroup(request), true, List.of("CREATED"), 200));
+                        this.groupService.addGroup(request), true, List.of("CREATED"), 201));
     }
 
     @PutMapping

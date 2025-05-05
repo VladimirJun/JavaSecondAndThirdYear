@@ -11,6 +11,7 @@ import org.example.demo1.repository.StudentRepository;
 import org.example.demo1.repository.TeacherRepository;
 import org.example.demo1.service.LessonService;
 import org.hibernate.service.spi.ServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
@@ -27,6 +28,7 @@ public class LessonServiceImpl implements LessonService {
     private final StudentRepository studentRepository;
     private final LessonMapper lessonMapper;
 
+    @Autowired
     public LessonServiceImpl(LessonRepository lessonRepository,
                              TeacherRepository teacherRepository,
                              GroupRepository groupRepository,
@@ -92,13 +94,8 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    @Transactional
     public void deleteLessonByTeacherId(Long teacherId) {
         try {
-
-            if (!this.teacherRepository.existsById(teacherId)) {
-                throw new NotFoundException("Teacher", teacherId);
-            }
 
             LessonEntity lesson = this.lessonRepository.getLessonByTeacherId(teacherId).orElseThrow(
                     () -> new NotFoundException(ENTITY + "by teacherId", teacherId)

@@ -8,6 +8,7 @@ import org.example.demo1.exception.ServiceException;
 import org.example.demo1.mapper.TeacherMapper;
 import org.example.demo1.repository.TeacherRepository;
 import org.example.demo1.service.TeacherService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository teacherRepository;
     private final TeacherMapper teacherMapper;
 
+    @Autowired
     public TeacherServiceImpl(TeacherRepository teacherRepository, TeacherMapper teacherMapper) {
         this.teacherRepository = teacherRepository;
         this.teacherMapper = teacherMapper;

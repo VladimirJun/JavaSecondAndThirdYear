@@ -5,12 +5,13 @@ import org.example.demo1.entity.GroupEntity;
 import org.example.demo1.entity.StudentEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
 import org.mapstruct.Named;
+
 
 import java.util.List;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+//@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = "spring")
 public interface GroupMapper extends CommonMapper<GroupEntity, GroupDto> {
     @Override
     @Mapping(target = "students", qualifiedByName = "mapToEntityFromStudentsIds", source = "studentsIds")
@@ -36,7 +37,7 @@ public interface GroupMapper extends CommonMapper<GroupEntity, GroupDto> {
             return null;
         }
         return students.stream()
-                .map(s-> s.getId())
+                .map(StudentEntity::getId)
                 .toList();
     }
 
@@ -45,4 +46,6 @@ public interface GroupMapper extends CommonMapper<GroupEntity, GroupDto> {
 
     @Override
     List<GroupDto> mapToDtos(List<GroupEntity> entities);
+
+
 }

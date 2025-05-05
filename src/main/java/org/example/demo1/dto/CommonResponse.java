@@ -12,12 +12,12 @@ public class CommonResponse<T> {
     private boolean success;
     private List<String> messageDetails;
 
-    private int keyError;
+    private int errorCode;
 
 
-    public CommonResponse(List<String> messageDetails, int keyError) {
+    public CommonResponse(List<String> messageDetails, int errorCode) {
         this.messageDetails = messageDetails;
-        this.keyError = keyError;
+        this.errorCode = errorCode;
     }
 
     public CommonResponse(T body) {
@@ -25,11 +25,11 @@ public class CommonResponse<T> {
         this.success = true;
     }
 
-    public CommonResponse(T body, boolean success, List<String> messageDetails, int keyError) {
+    public CommonResponse(T body, boolean success, List<String> messageDetails, int errorCode) {
         this.body = body;
         this.success = success;
         this.messageDetails = messageDetails;
-        this.keyError = keyError;
+        this.errorCode = errorCode;
     }
 
     public T getBody() {
@@ -44,7 +44,7 @@ public class CommonResponse<T> {
         return messageDetails;
     }
 
-    public int getKeyError() {
-        return keyError;
+    public int getErrorCode() {
+        return errorCode;
     }
 }

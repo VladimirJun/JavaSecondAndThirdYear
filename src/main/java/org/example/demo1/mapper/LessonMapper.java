@@ -13,7 +13,8 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.toMap;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+// @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = "spring")
 public interface LessonMapper extends CommonMapper<LessonEntity, LessonDto> {
     @Override
     @Mapping(target = "group.id", source = "groupId")

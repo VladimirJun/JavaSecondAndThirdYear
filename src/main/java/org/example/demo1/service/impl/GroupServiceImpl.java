@@ -9,8 +9,10 @@ import org.example.demo1.repository.GroupRepository;
 import org.example.demo1.repository.StudentRepository;
 import org.example.demo1.service.GroupService;
 import org.hibernate.service.spi.ServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class GroupServiceImpl implements GroupService {
     private final StudentRepository studentRepository;
     private final GroupMapper groupMapper;
 
+    @Autowired
     public GroupServiceImpl(GroupRepository groupRepository,
                             StudentRepository studentRepository,
                             GroupMapper groupMapper) {
@@ -57,7 +60,6 @@ public class GroupServiceImpl implements GroupService {
     @Transactional
     public void editGroup(GroupDto groupRequest) {
         try {
-
             if (!this.groupRepository.existsById(groupRequest.id())) {
                 throw new NotFoundException(ENTITY, groupRequest.id());
             }
@@ -80,13 +82,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    @Transactional
     public void deleteGroup(Long id) {
         try {
-
-            if (!this.groupRepository.existsById(id)) {
-                throw new NotFoundException(ENTITY, id);
-            }
             this.groupRepository.deleteById(id);
         } catch (Exception e) {
 

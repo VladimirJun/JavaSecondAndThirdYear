@@ -3,12 +3,11 @@ package org.example.demo1.mapper;
 import org.example.demo1.dto.TeacherDto;
 import org.example.demo1.entity.TeacherEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
 
 
 import java.util.List;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = "spring")
 public interface TeacherMapper extends CommonMapper<TeacherEntity, TeacherDto> {
     @Override
     TeacherEntity mapToEntity(TeacherDto teacherDto);

@@ -10,7 +10,7 @@ import org.example.demo1.repository.GroupRepository;
 import org.example.demo1.repository.StudentRepository;
 import org.example.demo1.service.StudentService;
 import org.hibernate.service.spi.ServiceException;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +26,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final GroupRepository groupRepository;
 
+    @Autowired
     public StudentServiceImpl(StudentMapper studentMapper,
                               StudentRepository studentRepository,
                               GroupRepository groupRepository) {

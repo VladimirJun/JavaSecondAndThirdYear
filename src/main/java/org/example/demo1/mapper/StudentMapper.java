@@ -1,14 +1,14 @@
 package org.example.demo1.mapper;
 
 import org.example.demo1.dto.StudentDto;
+
 import org.example.demo1.entity.StudentEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
 
 import java.util.List;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = "spring")
 public interface StudentMapper extends CommonMapper<StudentEntity, StudentDto> {
     @Override
     @Mapping(target = "group.id", source = "groupId")
@@ -23,4 +23,5 @@ public interface StudentMapper extends CommonMapper<StudentEntity, StudentDto> {
 
     @Override
     List<StudentDto> mapToDtos(List<StudentEntity> entities);
+
 }

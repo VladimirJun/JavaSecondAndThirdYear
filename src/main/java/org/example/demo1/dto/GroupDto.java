@@ -8,5 +8,7 @@ import java.util.List;
 public record GroupDto(
         Long id,
         @NotBlank @Size(min = 4, max = 1000) String title,
-        List<Long> studentsIds) {
+        List<Long> studentsIds)
+//#TODO add list<StudentDtoRequest>
+{
 }

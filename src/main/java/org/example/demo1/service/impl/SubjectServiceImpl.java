@@ -8,6 +8,7 @@ import org.example.demo1.mapper.SubjectMapper;
 import org.example.demo1.repository.SubjectRepository;
 import org.example.demo1.service.SubjectService;
 import org.hibernate.service.spi.ServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
     private final SubjectMapper subjectMapper;
 
+    @Autowired
     public SubjectServiceImpl(SubjectRepository subjectRepository, SubjectMapper subjectMapper) {
         this.subjectRepository = subjectRepository;
         this.subjectMapper = subjectMapper;

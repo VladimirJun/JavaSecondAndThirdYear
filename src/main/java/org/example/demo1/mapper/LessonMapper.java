@@ -1,6 +1,6 @@
 package org.example.demo1.mapper;
 
-import org.example.demo1.dto.LessonDto;
+import org.example.demo1.dto.lesson.LessonDto;
 import org.example.demo1.entity.LessonEntity;
 import org.example.demo1.entity.StudentEntity;
 import org.mapstruct.Mapper;
@@ -8,13 +8,13 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.Named;
 
+
 import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toMap;
 
-// @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface LessonMapper extends CommonMapper<LessonEntity, LessonDto> {
     @Override
     @Mapping(target = "group.id", source = "groupId")

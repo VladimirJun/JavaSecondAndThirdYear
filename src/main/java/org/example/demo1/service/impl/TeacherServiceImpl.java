@@ -1,104 +1,85 @@
 package org.example.demo1.service.impl;
 
 
-import org.example.demo1.dto.TeacherDto;
+import org.example.demo1.dto.teacher.CreateTeacherDto;
+import org.example.demo1.dto.teacher.TeacherDto;
+import org.example.demo1.dto.teacher.UpdateTeacherDto;
 import org.example.demo1.entity.TeacherEntity;
+import org.example.demo1.entity.user.Role;
 import org.example.demo1.exception.NotFoundException;
-import org.example.demo1.exception.ServiceException;
 import org.example.demo1.mapper.TeacherMapper;
 import org.example.demo1.repository.TeacherRepository;
 import org.example.demo1.service.TeacherService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.demo1.service.user.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.List;
 
 @Service
+@Transactional
 public class TeacherServiceImpl implements TeacherService {
 
     private static final String ENTITY = "Teacher";
 
     private final TeacherRepository teacherRepository;
-
     private final TeacherMapper teacherMapper;
+    private final UserService userService;
 
-    @Autowired
-    public TeacherServiceImpl(TeacherRepository teacherRepository, TeacherMapper teacherMapper) {
+    public TeacherServiceImpl(TeacherRepository teacherRepository,
+                              TeacherMapper teacherMapper,
+                              UserService userService) {
         this.teacherRepository = teacherRepository;
+        this.userService = userService;
         this.teacherMapper = teacherMapper;
     }
 
     @Override
-    @Transactional
-    public Long addTeacher(TeacherDto teacherRequest) {
-        try {
+    public Long addTeacher(CreateTeacherDto teacherRequest) {
 
-            TeacherEntity teacher = this.teacherMapper.mapToEntity(teacherRequest);
-            return this.teacherRepository.save(teacher).getId();
-        } catch (Exception e) {
+        TeacherEntity teacher = this.createAndGetTeacher(teacherRequest);
+        this.userService.createUser(teacherRequest.email(), teacherRequest.password(), Role.ROLE_TEACHER, teacher);
+        return teacher.getId();
+    }
 
-            throw new ServiceException("Service error on add teacher.", e);
-        }
+    private TeacherEntity createAndGetTeacher(CreateTeacherDto teacherRequest) {
+        TeacherEntity teacher = this.teacherMapper.mapToEntity(teacherRequest);
+        this.teacherRepository.save(teacher);
+        return teacher;
     }
 
     @Override
-    @Transactional
-    public void editTeacher(TeacherDto teacherRequest) {
-        try {
+    public void editTeacher(Long id, UpdateTeacherDto updateTeacherDto) {
+        TeacherEntity teacher = teacherRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(ENTITY, id));
 
-            if (!this.teacherRepository.existsById(teacherRequest.id())) {
-                throw new NotFoundException(ENTITY, teacherRequest.id());
-            }
+        this.teacherMapper.updateEntityFromDto(updateTeacherDto, teacher);
 
-            TeacherEntity updatedTeacher = this.teacherMapper.mapToEntity(teacherRequest);
-            this.teacherRepository.save(updatedTeacher);
-        } catch (Exception e) {
-
-            throw new ServiceException("Service error on edit teacher.", e);
-        }
+        this.teacherRepository.save(teacher);
     }
 
     @Override
-    @Transactional
     public void deleteTeacher(Long id) {
-        try {
+        TeacherEntity teacher = teacherRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(ENTITY, id));
 
-            if (!this.teacherRepository.existsById(id)) {
-
-                throw new NotFoundException(ENTITY, id);
-            }
-            this.teacherRepository.deleteById(id);
-        } catch (Exception e) {
-
-            throw new ServiceException("Service error on delete teacher.", e);
-        }
+        this.teacherRepository.delete(teacher);
+        this.userService.deleteUserByProfile(Role.ROLE_TEACHER, teacher);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TeacherDto getTeacherById(Long id) {
-        try {
-
-            TeacherEntity teacher = this.teacherRepository.findById(id).orElseThrow(
-                    () -> new NotFoundException(ENTITY, id)
-            );
-            return this.teacherMapper.mapToDto(teacher);
-        } catch (Exception e) {
-
-            throw new ServiceException("Service error on get teacher by id.", e);
-        }
+        TeacherEntity teacher = this.teacherRepository.findById(id).orElseThrow(
+                () -> new NotFoundException(ENTITY, id)
+        );
+        return this.teacherMapper.mapToDto(teacher);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TeacherDto> getTeachers() {
-        try {
-
-            List<TeacherEntity> teachers = (List<TeacherEntity>) this.teacherRepository.findAll();
-            return this.teacherMapper.mapToDtos(teachers);
-        } catch (Exception e) {
-
-            throw new ServiceException("Service error on get teachers.", e);
-        }
+        List<TeacherEntity> teachers = this.teacherRepository.findAll();
+        return this.teacherMapper.mapToDtos(teachers);
     }
 }

@@ -1,31 +1,27 @@
 package org.example.demo1.mapper;
 
-import org.example.demo1.dto.GroupDto;
+import org.example.demo1.dto.group.CreateGroupDto;
+import org.example.demo1.dto.group.GroupDto;
+import org.example.demo1.dto.group.UpdateGroupDto;
 import org.example.demo1.entity.GroupEntity;
 import org.example.demo1.entity.StudentEntity;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 
 import java.util.List;
 
-//@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface GroupMapper extends CommonMapper<GroupEntity, GroupDto> {
-    @Override
-    @Mapping(target = "students", qualifiedByName = "mapToEntityFromStudentsIds", source = "studentsIds")
-    GroupEntity mapToEntity(GroupDto groupDto);
+    GroupEntity mapToEntityFromCreateDto(CreateGroupDto groupDto);
 
-    @Named("mapToEntityFromStudentsIds")
-    default List<StudentEntity> mapToEntityFromStudentsIds(List<Long> studentsIds) {
-        if (studentsIds == null) {
-            return null;
-        }
-        return studentsIds.stream()
-                .map(StudentEntity::new)
-                .toList();
-    }
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateEntityFromDto(UpdateGroupDto updateGroupDto, @MappingTarget GroupEntity group);
 
     @Override
     @Mapping(target = "studentsIds", qualifiedByName = "mapToDtoFromStudents", source = "students")
@@ -46,6 +42,4 @@ public interface GroupMapper extends CommonMapper<GroupEntity, GroupDto> {
 
     @Override
     List<GroupDto> mapToDtos(List<GroupEntity> entities);
-
-
 }

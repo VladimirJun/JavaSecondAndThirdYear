@@ -1,0 +1,58 @@
+INSERT INTO t_lesson_attendance (c_id, c_attendance, c_lesson_id, c_student_id)
+VALUES
+    (1, true, 1, 1),
+    (2, false, 2, 1),
+    (3, true, 3, 1),
+    (4, true, 4, 1),
+    (5, false, 5, 1),
+    (6, true, 6, 1),
+    (7, true, 7, 1),
+
+    (8, true, 1, 2),
+    (9, true, 2, 2),
+    (10, false, 3, 2),
+    (11, true, 4, 2),
+    (12, true, 5, 2),
+    (13, false, 6, 2),
+    (14, true, 7, 2),
+
+    (15, true, 1, 3),
+    (16, true, 2, 3),
+    (17, true, 3, 3),
+    (18, true, 4, 3),
+    (19, true, 5, 3),
+    (20, true, 6, 3),
+    (21, true, 7, 3),
+
+    (22, true, 8, 7),
+    (23, true, 9, 7),
+    (24, false, 10, 7),
+    (25, true, 11, 7),
+    (26, true, 12, 7),
+    (27, true, 13, 7),
+    (28, false, 14, 7),
+
+    (29, true, 8, 8),
+    (30, false, 9, 8),
+    (31, true, 10, 8),
+    (32, true, 11, 8),
+    (33, true, 12, 8),
+    (34, false, 13, 8),
+    (35, true, 14, 8),
+
+    (36, true, 15, 13),
+    (37, true, 16, 13),
+    (38, false, 17, 13),
+    (39, true, 18, 13),
+    (40, true, 19, 13),
+    (41, false, 20, 13),
+    (42, true, 21, 13),
+
+    (43, true, 15, 14),
+    (44, false, 16, 14),
+    (45, true, 17, 14),
+    (46, true, 18, 14),
+    (47, true, 19, 14),
+    (48, true, 20, 14),
+    (49, false, 21, 14);
+

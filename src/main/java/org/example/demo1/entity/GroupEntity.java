@@ -7,51 +7,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
-
 @Entity
-@Table(name = "t_group")
+@Table(name = "t_groups")
 public class GroupEntity {
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public List<StudentEntity> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<StudentEntity> students) {
-        this.students = students;
-    }
-
-    public List<LessonEntity> getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(List<LessonEntity> lessons) {
-        this.lessons = lessons;
-    }
 
     @Id
     @Column(name = "c_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "c_title")
@@ -60,9 +25,6 @@ public class GroupEntity {
     @OneToMany(mappedBy = "group")
     private List<StudentEntity> students;
 
-    @OneToMany(mappedBy = "group")
-    private List<LessonEntity> lessons;
-
     public GroupEntity() {
     }
 
@@ -70,11 +32,33 @@ public class GroupEntity {
         this.id = id;
     }
 
-    public GroupEntity(Long id, String title, List<StudentEntity> students, List<LessonEntity> lessons) {
+    public GroupEntity(Long id, String title, List<StudentEntity> students) {
         this.id = id;
         this.title = title;
         this.students = students;
-        this.lessons = lessons;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public List<StudentEntity> getStudents() {
+        return students;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setStudents(List<StudentEntity> students) {
+        this.students = students;
+    }
 }

@@ -11,66 +11,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapKeyJoinColumn;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Map;
 
 @Entity
-@Table(name = "t_lesson")
+@Table(name = "t_lessons")
 public class LessonEntity {
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public TeacherEntity getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(TeacherEntity teacher) {
-        this.teacher = teacher;
-    }
-
-    public GroupEntity getGroup() {
-        return group;
-    }
-
-    public void setGroup(GroupEntity group) {
-        this.group = group;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public int getNumberOfLesson() {
-        return numberOfLesson;
-    }
-
-    public void setNumberOfLesson(int numberOfLesson) {
-        this.numberOfLesson = numberOfLesson;
-    }
-
-    public Map<StudentEntity, Boolean> getStudentAttendance() {
-        return studentAttendance;
-    }
-
-    public void setStudentAttendance(Map<StudentEntity, Boolean> studentAttendance) {
-        this.studentAttendance = studentAttendance;
-    }
-
     @Id
-    @Column(name = "c_lesson_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "c_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -88,7 +38,7 @@ public class LessonEntity {
     private int numberOfLesson;
 
     @ElementCollection
-    @CollectionTable(name = "lesson_attendance", joinColumns = @JoinColumn(name = "c_lesson_id"))
+    @CollectionTable(name = "t_lesson_attendance", joinColumns = @JoinColumn(name = "c_lesson_id"))
     @MapKeyJoinColumn(name = "c_student_id")
     @Column(name = "c_attendance")
     private Map<StudentEntity, Boolean> studentAttendance;
@@ -97,11 +47,11 @@ public class LessonEntity {
     }
 
     public LessonEntity(Long id,
-                        TeacherEntity teacher,
-                        GroupEntity group,
-                        LocalDate date,
-                        int numberOfLesson,
-                        Map<StudentEntity, Boolean> studentAttendance) {
+                  TeacherEntity teacher,
+                  GroupEntity group,
+                  LocalDate date,
+                  int numberOfLesson,
+                  Map<StudentEntity, Boolean> studentAttendance) {
         this.id = id;
         this.teacher = teacher;
         this.group = group;
@@ -110,4 +60,52 @@ public class LessonEntity {
         this.studentAttendance = studentAttendance;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+
+    public TeacherEntity getTeacher() {
+        return teacher;
+    }
+
+    public GroupEntity getGroup() {
+        return group;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public int getNumberOfLesson() {
+        return numberOfLesson;
+    }
+
+    public Map<StudentEntity, Boolean> getStudentAttendance() {
+        return studentAttendance;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTeacher(TeacherEntity teacher) {
+        this.teacher = teacher;
+    }
+
+    public void setGroup(GroupEntity group) {
+        this.group = group;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setNumberOfLesson(int numberOfLesson) {
+        this.numberOfLesson = numberOfLesson;
+    }
+
+    public void setStudentAttendance(Map<StudentEntity, Boolean> studentAttendance) {
+        this.studentAttendance = studentAttendance;
+    }
 }

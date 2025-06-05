@@ -1,14 +1,16 @@
 package org.example.demo1.service;
 
 
-import org.example.demo1.dto.GroupDto;
+import org.example.demo1.dto.group.CreateGroupDto;
+import org.example.demo1.dto.group.GroupDto;
+import org.example.demo1.dto.group.UpdateGroupDto;
 
 import java.util.List;
 
 public interface GroupService {
-    Long addGroup(GroupDto groupRequest);
+    Long addGroup(CreateGroupDto groupDto);
 
-    void editGroup(GroupDto groupRequest);
+    void editGroup(Long id, UpdateGroupDto updateGroupDto);
 
     void deleteGroup(Long id);
 

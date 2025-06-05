@@ -1,16 +1,24 @@
 package org.example.demo1.entity;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import org.example.demo1.entity.user.UserProfileReference;
+
 
 @Entity
-@Table(name = "t_student")
-
-public class StudentEntity {
+@Table(name = "t_students")
+public class StudentEntity implements UserProfileReference {
     @Id
-    @Column(name = "c_student_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "c_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "c_name")
@@ -22,6 +30,7 @@ public class StudentEntity {
     @Column(name = "c_patronymic")
     private String patronymic;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "c_status_of_students")
     private StudentStatus status;
 
@@ -37,11 +46,11 @@ public class StudentEntity {
     }
 
     public StudentEntity(Long id,
-                         String name,
-                         String surname,
-                         String patronymic,
-                         StudentStatus status,
-                         GroupEntity group) {
+                   String name,
+                   String surname,
+                   String patronymic,
+                   StudentStatus status,
+                   GroupEntity group) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -50,58 +59,48 @@ public class StudentEntity {
         this.group = group;
     }
 
-
-    public StudentStatus getStatusOfStudents() {
-        return status;
-    }
-
-
-    public void setStatusOfStudents(StudentStatus status) {
-        this.status = status;
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getSurname() {
         return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public String getPatronymic() {
         return patronymic;
     }
 
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
-    }
-
-    public StudentStatus getStatus() {
+    public StudentStatus getStatusOfStudents() {
         return status;
-    }
-
-    public void setStatus(StudentStatus status) {
-        this.status = status;
     }
 
     public GroupEntity getGroup() {
         return group;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public void setStatusOfStudents(StudentStatus status) {
+        this.status = status;
     }
 
     public void setGroup(GroupEntity group) {

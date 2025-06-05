@@ -1,19 +1,21 @@
 package org.example.demo1.service.impl;
 
 
-import org.example.demo1.dto.SubjectDto;
+import org.example.demo1.dto.subject.SubjectDto;
+import org.example.demo1.dto.subject.UpdateSubjectDto;
 import org.example.demo1.entity.SubjectEntity;
 import org.example.demo1.exception.NotFoundException;
 import org.example.demo1.mapper.SubjectMapper;
 import org.example.demo1.repository.SubjectRepository;
 import org.example.demo1.service.SubjectService;
-import org.hibernate.service.spi.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.List;
+
 @Service
+@Transactional
 public class SubjectServiceImpl implements SubjectService {
 
     private static final String ENTITY = "Subject";
@@ -21,68 +23,47 @@ public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
     private final SubjectMapper subjectMapper;
 
-    @Autowired
     public SubjectServiceImpl(SubjectRepository subjectRepository, SubjectMapper subjectMapper) {
         this.subjectRepository = subjectRepository;
         this.subjectMapper = subjectMapper;
     }
 
     @Override
-    @Transactional
-    public Long addSubject(SubjectDto subjectRequest) {
-        try {
-
-            SubjectEntity subject = this.subjectMapper.mapToEntity(subjectRequest);
-            return this.subjectRepository.save(subject).getId();
-        } catch (Exception e) {
-
-            throw new ServiceException("Service error on add subject.", e);
-        }
+    public Long addSubject(SubjectDto subjectDto) {
+        SubjectEntity subject = this.subjectMapper.mapToEntity(subjectDto);
+        return this.subjectRepository.save(subject).getId();
     }
 
     @Override
-    @Transactional
-    public void editSubject(SubjectDto subjectRequest) {
-        try {
+    public void editSubject(Long id, UpdateSubjectDto updateSubjectDto) {
+        SubjectEntity subject = this.subjectRepository.findById(id).orElseThrow(
+                () -> new NotFoundException(ENTITY, id)
+        );
+        this.subjectMapper.updateEntityFromDto(updateSubjectDto, subject);
 
-            if (!this.subjectRepository.existsById(subjectRequest.id())) {
-                throw new NotFoundException(ENTITY, subjectRequest.id());
-            }
-
-            SubjectEntity subject = this.subjectMapper.mapToEntity(subjectRequest);
-            this.subjectRepository.save(subject);
-        } catch (Exception e) {
-
-            throw new ServiceException("Service error on edit subject.", e);
-        }
+        this.subjectRepository.save(subject);
     }
 
     @Override
-    @Transactional
     public void deleteSubject(Long id) {
-        try {
-
-            if (!this.subjectRepository.existsById(id)) {
-                throw new NotFoundException(ENTITY, id);
-            }
-            this.subjectRepository.deleteById(id);
-        } catch (Exception e) {
-
-            throw new ServiceException("Service error on delete subject.", e);
-        }
+        SubjectEntity subject = this.subjectRepository.findById(id).orElseThrow(
+                () -> new NotFoundException(ENTITY, id)
+        );
+        this.subjectRepository.delete(subject);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public SubjectDto getSubjectById(Long id) {
-        try {
+        SubjectEntity subject = this.subjectRepository.findById(id).orElseThrow(
+                () -> new NotFoundException(ENTITY, id)
+        );
+        return this.subjectMapper.mapToDto(subject);
+    }
 
-            SubjectEntity subject = this.subjectRepository.findById(id).orElseThrow(
-                    () -> new NotFoundException(ENTITY, id)
-            );
-            return this.subjectMapper.mapToDto(subject);
-        } catch (Exception e) {
-
-            throw new ServiceException("Service error on get subject.", e);
-        }
+    @Override
+    @Transactional(readOnly = true)
+    public List<SubjectDto> getAllSubjects() {
+        return this.subjectMapper.mapToDtos((List<SubjectEntity>) this.subjectRepository.findAll());
     }
 }

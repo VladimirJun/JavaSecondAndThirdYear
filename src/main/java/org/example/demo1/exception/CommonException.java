@@ -1,9 +1,9 @@
 package org.example.demo1.exception;
 
-import lombok.Getter;
+
 import org.springframework.http.HttpStatus;
 
-@Getter
+
 public abstract class CommonException extends RuntimeException {
     private HttpStatus status;
 
@@ -20,4 +20,11 @@ public abstract class CommonException extends RuntimeException {
         super(message);
     }
 
+    public HttpStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(HttpStatus status) {
+        this.status = status;
+    }
 }

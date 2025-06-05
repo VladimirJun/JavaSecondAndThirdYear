@@ -16,6 +16,7 @@ CREATE TABLE t_students
 (
     c_id                 BIGINT AUTO_INCREMENT PRIMARY KEY,
     c_name               VARCHAR(15) NOT NULL,
+
     c_surname            VARCHAR(25) NOT NULL,
     c_patronymic         VARCHAR(40),
     c_status_of_students VARCHAR(30) NOT NULL,

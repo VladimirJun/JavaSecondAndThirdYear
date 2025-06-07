@@ -18,13 +18,13 @@ public record CreateStudentDto(
         @Schema(description = "Пароль", defaultValue = "vova123")
         @NotBlank String password,
 
-        @Schema(description = "Имя студента", defaultValue = "Студент1")
+        @Schema(description = "Имя студента", defaultValue = "Владимир")
         @NotBlank @Size(min = 2, max = 15) String name,
 
-        @Schema(description = "Фамилия студента", defaultValue = "Студент1")
+        @Schema(description = "Фамилия студента", defaultValue = "Петров")
         @NotBlank @Size(min = 2, max = 25) String surname,
 
-        @Schema(description = "Отчество студента", defaultValue = "Студент1")
+        @Schema(description = "Отчество студента", defaultValue = "Юрьевич")
         @Size(max = 40) String patronymic,
 
         @Schema(description = "Статус студента", defaultValue = "ACTIVE")

@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Map;
 
-@Schema(description = "Создание урока")
+@Schema(description = "DTO для создания пары")
 public record LessonDto(
         @Schema(accessMode = Schema.AccessMode.READ_ONLY) Long id,
 
@@ -19,7 +19,7 @@ public record LessonDto(
         @Schema(description = "Id группы", defaultValue = "1")
         @NotNull Long groupId,
 
-        @Schema(description = "Дата проведения", defaultValue = "05.05.2025")
+        @Schema(description = "Дата проведения", defaultValue = "2025.06.06")
         @NotNull @JsonFormat(pattern = "yyyy.MM.dd") LocalDate date,
 
         @Schema(description = "Номер пары", defaultValue = "1")
